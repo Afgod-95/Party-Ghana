@@ -84,7 +84,7 @@ const NavBar: React.FC<NavBarProps> = ({
                 </div>
               </div>
               <span className="text-xl font-bold text-black">
-                PartyGhana.Com
+                Party Ghana
               </span>
             </motion.div>
 

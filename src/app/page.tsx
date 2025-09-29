@@ -1,11 +1,11 @@
 "use client"
 import React, { useState, useEffect } from 'react';
 import {
-  Gift, Menu, X, Calendar, Share2, CheckCircle,
+  Gift, Calendar, Share2, CheckCircle,
   Facebook, Twitter, Instagram, ArrowRight,
   Sparkles,
 } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import ContactUs from '@/component/sections/ContactUs';
 import Features from '@/component/sections/Features';
 import Services from '@/component/sections/Services';
@@ -49,21 +49,6 @@ const PartyGhanaHomepage = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
-  // Animation variants
-  const fadeInUp = {
-    initial: { opacity: 0, y: 60 },
-    animate: { opacity: 1, y: 0 },
-    transition: { duration: 0.6 }
-  };
-
- 
-
-  const slideIn = {
-    initial: { x: -100, opacity: 0 },
-    animate: { x: 0, opacity: 1 },
-    transition: { duration: 0.5 }
-  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50">

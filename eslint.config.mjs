@@ -10,7 +10,9 @@ const compat = new FlatCompat({
 });
 
 const eslintConfig = [
+  // Use Next.js + TypeScript base configs
   ...compat.extends("next/core-web-vitals", "next/typescript"),
+
   {
     ignores: [
       "node_modules/**",
@@ -19,6 +21,17 @@ const eslintConfig = [
       "build/**",
       "next-env.d.ts",
     ],
+
+    rules: {
+      // Disable escaping errors for apostrophes and quotes in JSX text
+      "react/no-unescaped-entities": "off",
+
+      // Allow custom fonts (since you use Geist/Geist_Mono)
+      "@next/next/no-page-custom-font": "off",
+
+      // Optional: reduce noisy warnings
+      "react-hooks/exhaustive-deps": "warn", // instead of error
+    },
   },
 ];
 
