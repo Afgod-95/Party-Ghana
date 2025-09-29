@@ -36,7 +36,7 @@ const ContactUs = () => {
 
   const inputBaseClasses = "w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 placeholder-slate-500 text-slate-900 bg-white"
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
     setFormData(prev => ({
       ...prev,
@@ -44,7 +44,7 @@ const ContactUs = () => {
     }))
   }
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async ( e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     e.preventDefault()
     setIsSubmitting(true)
 
@@ -167,7 +167,7 @@ const ContactUs = () => {
                       </p>
                     </div>
 
-                    <form onSubmit={handleSubmit} className="space-y-6">
+                    <form onSubmit={() => handleSubmit} className="space-y-6">
                       {/* Personal Information */}
                       <div className="grid md:grid-cols-2 gap-6">
                         <div className="flex flex-col">

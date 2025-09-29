@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useMemo } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
-import { Gift, ArrowRight, X, Menu } from 'lucide-react'
+import { ArrowRight, X, Menu } from 'lucide-react'
 import Logo from '@/assets/Logo.png'
 import Image from 'next/image'
 
@@ -21,13 +21,13 @@ const NavBar: React.FC<NavBarProps> = ({
 }) => {
 
     // Navigation items
-      const navItems = [
+      const navItems = useMemo(() => [
         { name: 'Home', href: 'home' },
         { name: 'How It Works', href: 'how-it-works' },
         { name: 'Services', href: 'services' },
         { name: 'About Us', href: 'about-us' },
         { name: 'Contact', href: 'contact' }
-      ];
+      ],[]);
     
       // Smooth scroll function
       const scrollToSection = (sectionId: string) => {
@@ -58,7 +58,7 @@ const NavBar: React.FC<NavBarProps> = ({
     
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
-      }, []);
+      }, [navItems, setActiveSection]);
     
   return (
     <motion.header
