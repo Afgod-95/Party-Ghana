@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { Suspense } from "react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -36,7 +37,7 @@ export const metadata: Metadata = {
     siteName: "PartyGhana",
     images: [
       {
-        url: "/og-image.png", // place SEO preview image inside public
+        url: "/og-image.png",
         width: 1200,
         height: 630,
         alt: "PartyGhana Event & Gift Management",
@@ -60,6 +61,15 @@ export const metadata: Metadata = {
   },
 };
 
+// Simple fallback loader
+function LoadingSpinner() {
+  return (
+    <div className="flex h-screen items-center justify-center bg-white">
+      <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-purple-500 border-solid"></div>
+    </div>
+  );
+}
+
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
@@ -68,7 +78,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <Suspense fallback={<LoadingSpinner />}>{children}</Suspense>
       </body>
     </html>
   );
