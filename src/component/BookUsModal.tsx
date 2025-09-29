@@ -173,7 +173,7 @@ const BookUsModal: React.FC<BookUsModalProps> = ({ isOpen, onClose }) => {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={onClose}
-                  className="absolute top-8 right-5 z-20 w-8 h-8 bg-slate-100 hover:bg-slate-200 rounded-full flex items-center justify-center transition-colors border border-slate-300"
+                  className="absolute top-4 right-4 z-20 w-8 h-8 bg-slate-100 hover:bg-slate-200 rounded-full flex items-center justify-center transition-colors border border-slate-300"
                   style={{ pointerEvents: 'auto' }}
                 >
                   <X className="w-4 h-4 text-slate-600" />

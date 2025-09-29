@@ -134,39 +134,55 @@ const NavBar: React.FC<NavBarProps> = ({
           </div>
 
           {/* Mobile Menu */}
-          <AnimatePresence>
+          <AnimatePresence mode="wait">
             {isMenuOpen && (
               <motion.div
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: 'auto' }}
                 exit={{ opacity: 0, height: 0 }}
-                transition={{ duration: 0.3 }}
-                className="md:hidden py-4 space-y-4 border-t border-slate-200 overflow-hidden"
+                transition={{ 
+                  duration: 0.3,
+                  ease: "easeInOut"
+                }}
+                className="md:hidden overflow-hidden"
               >
-                {navItems.map((item, index) => (
+                <div className="py-4 space-y-4 border-t border-slate-200">
+                  {navItems.map((item, index) => (
+                    <motion.button
+                      key={item.name}
+                      initial={{ x: -20, opacity: 0 }}
+                      animate={{ x: 0, opacity: 1 }}
+                      exit={{ x: -20, opacity: 0 }}
+                      transition={{ 
+                        delay: index * 0.05,
+                        duration: 0.2,
+                        ease: "easeOut"
+                      }}
+                      onClick={() => scrollToSection(item.href)}
+                      className={`block text-sm font-medium transition-colors py-2 w-full text-left ${activeSection === item.href ? 'text-blue-600' : 'text-slate-700 hover:text-blue-600'
+                        }`}
+                    >
+                      {item.name}
+                    </motion.button>
+                  ))}
                   <motion.button
-                    key={item.name}
-                    initial={{ x: -50, opacity: 0 }}
+                    initial={{ x: -20, opacity: 0 }}
                     animate={{ x: 0, opacity: 1 }}
-                    exit={{ x: -50, opacity: 0 }}
-                    transition={{ delay: index * 0.1 }}
-                    onClick={() => scrollToSection(item.href)}
-                    className={`block text-sm font-medium transition-colors py-2 w-full text-left ${activeSection === item.href ? 'text-blue-600' : 'text-slate-700 hover:text-blue-600'
-                      }`}
+                    exit={{ x: -20, opacity: 0 }}
+                    transition={{ 
+                      delay: navItems.length * 0.05,
+                      duration: 0.2,
+                      ease: "easeOut"
+                    }}
+                    onClick={() => {
+                      setIsModalOpen(true);
+                      setIsMenuOpen(false);
+                    }}
+                    className="w-full mt-4 bg-gradient-to-r from-blue-500 to-purple-600 text-white px-6 py-2.5 rounded-full text-sm font-semibold"
                   >
-                    {item.name}
+                    Book Us Now
                   </motion.button>
-                ))}
-                <motion.button
-                  initial={{ x: -50, opacity: 0 }}
-                  animate={{ x: 0, opacity: 1 }}
-                  exit={{ x: -50, opacity: 0 }}
-                  transition={{ delay: navItems.length * 0.1 }}
-                  onClick={() => setIsModalOpen(true)}
-                  className="w-full mt-4 bg-gradient-to-r from-blue-500 to-purple-600 text-white px-6 py-2.5 rounded-full text-sm font-semibold"
-                >
-                  Book Us Now
-                </motion.button>
+                </div>
               </motion.div>
             )}
           </AnimatePresence>
