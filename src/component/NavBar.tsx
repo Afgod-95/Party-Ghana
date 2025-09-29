@@ -60,6 +60,25 @@ const NavBar: React.FC<NavBarProps> = ({
         return () => window.removeEventListener('scroll', handleScroll);
       }, [navItems, setActiveSection]);
     
+  // Prevent body scroll and horizontal overflow when menu is open
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.body.style.overflow = 'hidden';
+      document.body.style.position = 'fixed';
+      document.body.style.width = '100%';
+    } else {
+      document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.width = '';
+    }
+
+    return () => {
+      document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.width = '';
+    };
+  }, [isMenuOpen]);
+
   return (
     <motion.header
         initial={{ y: -100 }}
