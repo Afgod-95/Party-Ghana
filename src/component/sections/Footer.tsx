@@ -92,7 +92,7 @@ const Footer = () => {
             className="border-t border-slate-800 pt-8 text-center"
           >
             <p className="text-slate-400">
-              © {new Date ().getFullYear()} PartyGhana.Com. All rights reserved.
+              © {new Date ().getFullYear()} Party Ghana. All rights reserved.
             </p>
           </motion.div>
         </div>

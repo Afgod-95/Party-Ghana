@@ -44,7 +44,7 @@ const ContactUs = () => {
     }))
   }
 
-  const handleSubmit = async ( e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleSubmit = async ( e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setIsSubmitting(true)
 
@@ -167,7 +167,7 @@ const ContactUs = () => {
                       </p>
                     </div>
 
-                    <form onSubmit={() => handleSubmit} className="space-y-6">
+                    <form onSubmit={handleSubmit} className="space-y-6">
                       {/* Personal Information */}
                       <div className="grid md:grid-cols-2 gap-6">
                         <div className="flex flex-col">

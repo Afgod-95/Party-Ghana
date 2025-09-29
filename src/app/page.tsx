@@ -1,6 +1,5 @@
 "use client"
 import React, { useState, useEffect } from 'react';
-import { Calendar, Share2, CheckCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
 import ContactUs from '@/component/sections/ContactUs';
 import Features from '@/component/sections/Features';
@@ -11,6 +10,7 @@ import NavBar from '@/component/NavBar';
 import ScrollTop from '@/component/ScrollToTop';
 import LandingPage from '@/component/sections/LandingPage';
 import Footer from '@/component/sections/Footer';
+import StepsSection from '@/component/sections/StepsSecction';
 
 
 const PartyGhanaHomepage = () => {
@@ -85,61 +85,7 @@ const PartyGhanaHomepage = () => {
               </p>
             </motion.div>
 
-            <div className="grid md:grid-cols-3 gap-12 max-w-5xl mx-auto">
-              {[
-                {
-                  icon: Calendar,
-                  title: 'Create Your Event',
-                  description: 'Set up a beautiful event page with all details, gift preferences, and custom branding.',
-                  color: 'blue'
-                },
-                {
-                  icon: Share2,
-                  title: 'Share with Guests',
-                  description: 'Share your unique event link via WhatsApp, email, or social media for seamless access.',
-                  color: 'purple'
-                },
-                {
-                  icon: CheckCircle,
-                  title: 'Track & Celebrate',
-                  description: 'Monitor gifts in real-time, send thank-you notes, and celebrate your special moments.',
-                  color: 'pink'
-                }
-              ].map((step, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 50 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.2, duration: 0.6 }}
-                  whileHover={{ y: -10 }}
-                  className="relative group"
-                >
-                  <div className="flex flex-col items-center text-center">
-                    <div className={`relative mb-8`}>
-                      <motion.div
-                        whileHover={{ rotate: 360 }}
-                        transition={{ duration: 0.5 }}
-                        className={`w-20 h-20 rounded-2xl bg-gradient-to-br from-${step.color}-400 to-${step.color}-600 flex items-center justify-center shadow-lg`}
-                      >
-                        <step.icon className="w-10 h-10 text-white" />
-                      </motion.div>
-                      <div className="absolute -top-2 -right-2 w-8 h-8 bg-white rounded-full border-4 border-slate-100 flex items-center justify-center text-sm font-bold text-slate-700">
-                        {index + 1}
-                      </div>
-                    </div>
-
-                    <h3 className="text-2xl font-bold text-slate-900 mb-4">{step.title}</h3>
-                    <p className="text-slate-600 leading-relaxed">{step.description}</p>
-                  </div>
-
-                  {/* Connection line */}
-                  {index < 2 && (
-                    <div className="hidden md:block absolute top-10 left-full w-12 h-0.5 bg-gradient-to-r from-slate-300 to-transparent transform translate-x-6"></div>
-                  )}
-                </motion.div>
-              ))}
-            </div>
+            <StepsSection />
           </div>
         </motion.section>
 
