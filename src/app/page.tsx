@@ -1,103 +1,282 @@
-import Image from "next/image";
+"use client"
+import React, { useState, useEffect } from 'react';
+import {
+  Gift, Menu, X, Calendar, Share2, CheckCircle,
+  Facebook, Twitter, Instagram, ArrowRight,
+  Sparkles,
+} from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import ContactUs from '@/component/sections/ContactUs';
+import Features from '@/component/sections/Features';
+import Services from '@/component/sections/Services';
+import BookUsModal from '@/component/BookUsModal';
+import AboutUs from '@/component/sections/AboutUs';
+import NavBar from '@/component/NavBar';
+import ScrollTop from '@/component/ScrollToTop';
+import LandingPage from '@/component/sections/LandingPage';
 
-export default function Home() {
+
+const PartyGhanaHomepage = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState('home');
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
+  // Navigation items
+  const navItems = [
+    { name: 'Home', href: 'home' },
+    { name: 'How It Works', href: 'how-it-works' },
+    { name: 'Services', href: 'services' },
+    { name: 'About Us', href: 'about-us' },
+    { name: 'Contact', href: 'contact' }
+  ];
+
+
+  // Track active section on scroll
+  useEffect(() => {
+    const handleScroll = () => {
+      const sections = navItems.map(item => item.href);
+      const scrollPosition = window.scrollY + 100;
+
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const section = document.getElementById(sections[i]);
+        if (section && section.offsetTop <= scrollPosition) {
+          setActiveSection(sections[i]);
+          break;
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Animation variants
+  const fadeInUp = {
+    initial: { opacity: 0, y: 60 },
+    animate: { opacity: 1, y: 0 },
+    transition: { duration: 0.6 }
+  };
+
+ 
+
+  const slideIn = {
+    initial: { x: -100, opacity: 0 },
+    animate: { x: 0, opacity: 1 },
+    transition: { duration: 0.5 }
+  };
+
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50">
+      {/* Header */}
+      <NavBar 
+        setIsMenuOpen={setIsMenuOpen}
+        setActiveSection={setActiveSection}
+        activeSection={activeSection}
+        isMenuOpen={isMenuOpen}
+        setIsModalOpen={setIsModalOpen}
+      />
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
+      <main>
+        {/* Hero Section */}
+        <LandingPage />
+
+        {/* How It Works Section */}
+        <motion.section
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="py-24 bg-white"
+          id="how-it-works"
+        >
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="text-center mb-20"
+            >
+              <h2 className="text-4xl font-bold text-slate-900 mb-6">How It Works</h2>
+              <p className="text-xl text-slate-600 max-w-2xl mx-auto">
+                Book Us Now in minutes with our simple, powerful gift management system
+              </p>
+            </motion.div>
+
+            <div className="grid md:grid-cols-3 gap-12 max-w-5xl mx-auto">
+              {[
+                {
+                  icon: Calendar,
+                  title: 'Create Your Event',
+                  description: 'Set up a beautiful event page with all details, gift preferences, and custom branding.',
+                  color: 'blue'
+                },
+                {
+                  icon: Share2,
+                  title: 'Share with Guests',
+                  description: 'Share your unique event link via WhatsApp, email, or social media for seamless access.',
+                  color: 'purple'
+                },
+                {
+                  icon: CheckCircle,
+                  title: 'Track & Celebrate',
+                  description: 'Monitor gifts in real-time, send thank-you notes, and celebrate your special moments.',
+                  color: 'pink'
+                }
+              ].map((step, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 50 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.2, duration: 0.6 }}
+                  whileHover={{ y: -10 }}
+                  className="relative group"
+                >
+                  <div className="flex flex-col items-center text-center">
+                    <div className={`relative mb-8`}>
+                      <motion.div
+                        whileHover={{ rotate: 360 }}
+                        transition={{ duration: 0.5 }}
+                        className={`w-20 h-20 rounded-2xl bg-gradient-to-br from-${step.color}-400 to-${step.color}-600 flex items-center justify-center shadow-lg`}
+                      >
+                        <step.icon className="w-10 h-10 text-white" />
+                      </motion.div>
+                      <div className="absolute -top-2 -right-2 w-8 h-8 bg-white rounded-full border-4 border-slate-100 flex items-center justify-center text-sm font-bold text-slate-700">
+                        {index + 1}
+                      </div>
+                    </div>
+
+                    <h3 className="text-2xl font-bold text-slate-900 mb-4">{step.title}</h3>
+                    <p className="text-slate-600 leading-relaxed">{step.description}</p>
+                  </div>
+
+                  {/* Connection line */}
+                  {index < 2 && (
+                    <div className="hidden md:block absolute top-10 left-full w-12 h-0.5 bg-gradient-to-r from-slate-300 to-transparent transform translate-x-6"></div>
+                  )}
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </motion.section>
+
+        {/* Services Section */}
+        <Services />
+        
+
+        {/* About Us Section */}
+        <AboutUs />
+
+        {/* Features Section */}
+        <Features />
+
+        {/* Contact Section */}
+        <ContactUs />
       </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+
+      {/* Footer */}
+      <motion.footer
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8 }}
+        className="bg-slate-900 text-white py-16"
+      >
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid md:grid-cols-4 gap-8 mb-12">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+            >
+              <div className="flex items-center space-x-3 mb-6">
+                <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center">
+                  <Gift className="w-6 h-6 text-white" />
+                </div>
+                <span className="text-xl font-bold">PartyGhana.Com</span>
+              </div>
+              <p className="text-slate-400 leading-relaxed mb-6">
+                Ghana&apos;s premier gift management platform. Making celebrations memorable and stress-free.
+              </p>
+              <div className="flex space-x-4">
+                {[Facebook, Twitter, Instagram].map((Icon, index) => (
+                  <motion.a
+                    key={index}
+                    href="#"
+                    whileHover={{ scale: 1.2, rotate: 5 }}
+                    whileTap={{ scale: 0.9 }}
+                    className="w-10 h-10 bg-slate-800 rounded-lg flex items-center justify-center hover:bg-blue-600 transition-colors"
+                  >
+                    <Icon className="w-5 h-5" />
+                  </motion.a>
+                ))}
+              </div>
+            </motion.div>
+
+            {[
+              {
+                title: 'Services',
+                links: ['Gift Registry', 'Event Planning', 'Guest Management', 'RSVP Tracking', 'Photo Sharing']
+              },
+              {
+                title: 'Company',
+                links: ['About Us', 'Careers', 'Press', 'Blog', 'Contact']
+              },
+              {
+                title: 'Support',
+                links: ['Help Center', 'Safety', 'Community Guidelines', 'Privacy Policy', 'Terms of Service']
+              }
+            ].map((section, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: (index + 1) * 0.1, duration: 0.6 }}
+              >
+                <h4 className="font-semibold mb-4">{section.title}</h4>
+                <ul className="space-y-2">
+                  {section.links.map((link, linkIndex) => (
+                    <li key={linkIndex}>
+                      <motion.a
+                        href="#"
+                        whileHover={{ x: 5 }}
+                        className="text-slate-400 hover:text-white transition-all duration-200"
+                      >
+                        {link}
+                      </motion.a>
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
+            ))}
+          </div>
+
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.5, duration: 0.6 }}
+            className="border-t border-slate-800 pt-8 text-center"
+          >
+            <p className="text-slate-400">
+              © {new Date ().getFullYear()} PartyGhana.Com. All rights reserved.
+            </p>
+          </motion.div>
+        </div>
+      </motion.footer>
+
+      {/* MODAL */}
+      <BookUsModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
+      {!isModalOpen && <ScrollTop /> }
+      
     </div>
   );
-}
+};
+
+export default PartyGhanaHomepage;
