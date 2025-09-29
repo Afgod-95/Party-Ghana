@@ -88,7 +88,7 @@ const NavBar: React.FC<NavBarProps> = ({
               </span>
             </motion.div>
 
-            <div className="hidden md:flex items-center space-x-8">
+            <div className="hidden lg:flex items-center space-x-8">
               {navItems.map((item) => (
                 <motion.button
                   key={item.name}
@@ -122,7 +122,7 @@ const NavBar: React.FC<NavBarProps> = ({
               </motion.button>
             </div>
 
-            <div className="md:hidden">
+            <div className="lg:hidden">
               <motion.button
                 whileTap={{ scale: 0.9 }}
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -144,7 +144,7 @@ const NavBar: React.FC<NavBarProps> = ({
                   duration: 0.3,
                   ease: "easeInOut"
                 }}
-                className="md:hidden overflow-hidden"
+                className="lg:hidden overflow-hidden"
               >
                 <div className="py-4 space-y-4 border-t border-slate-200">
                   {navItems.map((item, index) => (
