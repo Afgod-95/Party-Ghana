@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Phone, User, MessageCircle, Calendar, Users, Gift, ChevronDown } from 'lucide-react';
+import { X, Phone, User, MessageCircle, Calendar, Users, ChevronDown } from 'lucide-react';
 
 interface BookUsModalProps {
   isOpen: boolean;
@@ -29,35 +29,23 @@ const BookUsModal: React.FC<BookUsModalProps> = ({ isOpen, onClose }) => {
   });
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
-  const [isMobile, setIsMobile] = useState<boolean>(false);
   const [isEventTypeOpen, setIsEventTypeOpen] = useState<boolean>(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
-  const modalRef = useRef<HTMLDivElement>(null);
 
   // Prevent body scroll when modal is open
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden';
-      document.body.style.pointerEvents = 'none';
     } else {
-      document.body.style.overflow = 'unset';
-      document.body.style.pointerEvents = 'auto';
+      document.body.style.overflow = '';
     }
 
     return () => {
-      document.body.style.overflow = 'unset';
-      document.body.style.pointerEvents = 'auto';
+      document.body.style.overflow = '';
     };
   }, [isOpen]);
 
   useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-
     // Close dropdown when clicking outside
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
@@ -68,7 +56,6 @@ const BookUsModal: React.FC<BookUsModalProps> = ({ isOpen, onClose }) => {
     document.addEventListener('mousedown', handleClickOutside);
     
     return () => {
-      window.removeEventListener('resize', checkMobile);
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
@@ -117,7 +104,7 @@ const BookUsModal: React.FC<BookUsModalProps> = ({ isOpen, onClose }) => {
 
   const isFormValid = formData.name.trim() && formData.email.trim() && formData.phone.trim() && formData.eventType.trim() && formData.eventDate.trim() && formData.message.trim();
 
-  const inputBaseClasses = "w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 placeholder-slate-500 text-slate-900 bg-white";
+  const inputBaseClasses = "w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 placeholder-slate-500 text-slate-900 bg-white";
   
   const eventTypes = [
     'Wedding',
@@ -129,68 +116,54 @@ const BookUsModal: React.FC<BookUsModalProps> = ({ isOpen, onClose }) => {
     'Other'
   ];
 
-  // Calculate header height for form margin
-  const headerHeight = isMobile ? 140 : 160;
-
   return (
     <AnimatePresence>
       {isOpen && (
         <>
-          {/* Backdrop - Fixed black background with pointer events enabled */}
+          {/* Backdrop */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0  bg-[rgba(0,0,0,0.1)] backdrop-blur-sm z-50 flex items-center justify-center p-4"
-            style={{ pointerEvents: 'auto' }}
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-0 sm:p-4"
             onClick={onClose}
           >
             {/* Modal Container */}
             <motion.div
-              initial={{ scale: 0.9, opacity: 0, y: 20 }}
+              initial={{ scale: 0.95, opacity: 0, y: 20 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
-              exit={{ scale: 0.9, opacity: 0, y: 20 }}
+              exit={{ scale: 0.95, opacity: 0, y: 20 }}
               transition={{ 
                 type: "spring", 
                 stiffness: 300, 
                 damping: 30 
               }}
-              className="relative w-full max-w-2xl mx-auto h-full md:h-auto flex items-center justify-center"
+              className="relative w-full h-full sm:h-auto sm:max-w-2xl sm:mx-auto flex items-stretch sm:items-center justify-center"
               onClick={(e) => e.stopPropagation()}
-              style={{ pointerEvents: 'auto' }}
-              ref={modalRef}
             >
-              {/* Modal Content Container */}
-              <div 
-                className={`bg-white rounded-xl shadow-2xl border border-slate-200 overflow-hidden w-full max-h-[95vh] md:max-h-[90vh] flex flex-col ${
-                  isMobile ? 'm-2' : ''
-                }`}
-                style={{ pointerEvents: 'auto' }}
-              >
+              {/* Modal Content */}
+              <div className="bg-white w-full h-full sm:h-auto sm:rounded-2xl shadow-2xl border-0 sm:border sm:border-slate-200 overflow-hidden flex flex-col sm:max-h-[90vh]">
+                
                 {/* Close Button */}
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={onClose}
-                  className="absolute top-4 right-4 z-20 w-8 h-8 bg-slate-100 hover:bg-slate-200 rounded-full flex items-center justify-center transition-colors border border-slate-300"
-                  style={{ pointerEvents: 'auto' }}
+                  className="absolute top-3 right-3 sm:top-4 sm:right-4 z-20 w-9 h-9 sm:w-10 sm:h-10 bg-white/90 hover:bg-white rounded-full flex items-center justify-center transition-colors shadow-lg border border-slate-200"
                 >
-                  <X className="w-4 h-4 text-slate-600" />
+                  <X className="w-5 h-5 sm:w-6 sm:h-6 text-slate-700" />
                 </motion.button>
 
                 {!isSubmitted ? (
                   <>
                     {/* Fixed Header */}
-                    <div 
-                      className="bg-slate-900 p-6 md:p-8 text-white flex-shrink-0 border-b border-slate-700"
-                      style={{ pointerEvents: 'auto' }}
-                    >
+                    <div className="bg-gradient-to-r from-blue-600 to-purple-600 px-4 py-6 sm:p-8 text-white flex-shrink-0">
                       <motion.h2
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.2 }}
-                        className="text-2xl md:text-3xl text-center font-bold mb-2"
+                        className="text-xl sm:text-2xl lg:text-3xl text-center font-bold mb-2"
                       >
                         Book Our Services
                       </motion.h2>
@@ -199,31 +172,26 @@ const BookUsModal: React.FC<BookUsModalProps> = ({ isOpen, onClose }) => {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ delay: 0.3 }}
-                        className="text-slate-300 text-center text-sm md:text-base"
+                        className="text-blue-100 text-center text-xs sm:text-sm lg:text-base"
                       >
-                        Complete the form below and we'll get back to you within 24 hours to discuss your event.
+                        Complete the form below and we'll get back to you within 24 hours
                       </motion.p>
                     </div>
 
                     {/* Scrollable Form Content */}
-                    <div 
-                      className="flex-1 overflow-y-auto"
-                      style={{ 
-                        maxHeight: `calc(95vh - ${headerHeight}px)`,
-                        pointerEvents: 'auto'
-                      }}
-                    >
+                    <div className="flex-1 overflow-y-auto overscroll-contain">
                       <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.4 }}
-                        className="p-6 md:p-8"
+                        className="p-4 sm:p-6 lg:p-8"
                       >
-                        <form onSubmit={handleSubmit} className="space-y-6">
+                        <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
+                          
                           {/* Personal Information */}
-                          <div className="grid md:grid-cols-2 gap-6">
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                             <div className="flex flex-col">
-                              <label className="block text-sm font-medium text-slate-700 mb-2">
+                              <label className="block text-xs sm:text-sm font-medium text-slate-700 mb-1.5 sm:mb-2">
                                 Full Name *
                               </label>
                               <div className="relative">
@@ -233,15 +201,15 @@ const BookUsModal: React.FC<BookUsModalProps> = ({ isOpen, onClose }) => {
                                   name="name"
                                   value={formData.name}
                                   onChange={handleInputChange}
-                                  className={`${inputBaseClasses} pl-10`}
-                                  placeholder="Enter your full name"
+                                  className={`${inputBaseClasses} pl-9 sm:pl-10`}
+                                  placeholder="Enter your name"
                                   required
                                 />
                               </div>
                             </div>
 
                             <div className="flex flex-col">
-                              <label className="block text-sm font-medium text-slate-700 mb-2">
+                              <label className="block text-xs sm:text-sm font-medium text-slate-700 mb-1.5 sm:mb-2">
                                 Email Address *
                               </label>
                               <input
@@ -257,9 +225,9 @@ const BookUsModal: React.FC<BookUsModalProps> = ({ isOpen, onClose }) => {
                           </div>
 
                           {/* Contact Details */}
-                          <div className="grid md:grid-cols-2 gap-6">
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                             <div className="flex flex-col">
-                              <label className="block text-sm font-medium text-slate-700 mb-2">
+                              <label className="block text-xs sm:text-sm font-medium text-slate-700 mb-1.5 sm:mb-2">
                                 Mobile Number *
                               </label>
                               <div className="relative">
@@ -269,52 +237,52 @@ const BookUsModal: React.FC<BookUsModalProps> = ({ isOpen, onClose }) => {
                                   name="phone"
                                   value={formData.phone}
                                   onChange={handleInputChange}
-                                  className={`${inputBaseClasses} pl-10`}
+                                  className={`${inputBaseClasses} pl-9 sm:pl-10`}
                                   placeholder="+233 24 123 4567"
                                   required
                                 />
                               </div>
                             </div>
 
-                            {/* Animated Event Type Dropdown */}
+                            {/* Event Type Dropdown */}
                             <div className="flex flex-col relative" ref={dropdownRef}>
-                              <label className="block text-sm font-medium text-slate-700 mb-2">
+                              <label className="block text-xs sm:text-sm font-medium text-slate-700 mb-1.5 sm:mb-2">
                                 Event Type *
                               </label>
                               <div className="relative">
                                 <button
                                   type="button"
                                   onClick={() => setIsEventTypeOpen(!isEventTypeOpen)}
-                                  className={`${inputBaseClasses} text-left flex items-center justify-between cursor-pointer ${
+                                  className={`${inputBaseClasses} text-left flex items-center justify-between ${
                                     !formData.eventType ? 'text-slate-500' : 'text-slate-900'
                                   }`}
                                 >
-                                  <span>{formData.eventType || 'Select event type'}</span>
+                                  <span className="truncate">{formData.eventType || 'Select event type'}</span>
                                   <motion.div
                                     animate={{ rotate: isEventTypeOpen ? 180 : 0 }}
                                     transition={{ duration: 0.2 }}
                                   >
-                                    <ChevronDown className="w-4 h-4 text-slate-400" />
+                                    <ChevronDown className="w-4 h-4 text-slate-400 flex-shrink-0" />
                                   </motion.div>
                                 </button>
                                 
                                 <AnimatePresence>
                                   {isEventTypeOpen && (
                                     <motion.div
-                                      initial={{ opacity: 0, y: -10, scale: 0.95 }}
-                                      animate={{ opacity: 1, y: 0, scale: 1 }}
-                                      exit={{ opacity: 0, y: -10, scale: 0.95 }}
+                                      initial={{ opacity: 0, y: -10 }}
+                                      animate={{ opacity: 1, y: 0 }}
+                                      exit={{ opacity: 0, y: -10 }}
                                       transition={{ duration: 0.2 }}
-                                      className="absolute z-10 w-full mt-1 bg-white border border-slate-300 rounded-lg shadow-lg overflow-hidden"
+                                      className="absolute z-20 w-full mt-1 bg-white border border-slate-300 rounded-lg shadow-xl max-h-60 overflow-y-auto"
                                     >
                                       {eventTypes.map((type) => (
                                         <button
                                           key={type}
                                           type="button"
                                           onClick={() => handleEventTypeSelect(type)}
-                                          className={`w-full px-4 py-3 text-left hover:bg-slate-50 transition-colors duration-150 ${
+                                          className={`w-full px-3 sm:px-4 py-2.5 sm:py-3 text-left text-sm sm:text-base hover:bg-slate-50 transition-colors ${
                                             formData.eventType === type 
-                                              ? 'bg-blue-50 text-blue-600' 
+                                              ? 'bg-blue-50 text-blue-600 font-medium' 
                                               : 'text-slate-700'
                                           }`}
                                         >
@@ -329,9 +297,9 @@ const BookUsModal: React.FC<BookUsModalProps> = ({ isOpen, onClose }) => {
                           </div>
 
                           {/* Event Details */}
-                          <div className="grid md:grid-cols-2 gap-6">
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                             <div className="flex flex-col">
-                              <label className="block text-sm font-medium text-slate-700 mb-2">
+                              <label className="block text-xs sm:text-sm font-medium text-slate-700 mb-1.5 sm:mb-2">
                                 Event Date *
                               </label>
                               <div className="relative">
@@ -341,15 +309,15 @@ const BookUsModal: React.FC<BookUsModalProps> = ({ isOpen, onClose }) => {
                                   name="eventDate"
                                   value={formData.eventDate}
                                   onChange={handleInputChange}
-                                  className={`${inputBaseClasses} pl-10`}
+                                  className={`${inputBaseClasses} pl-9 sm:pl-10`}
                                   required
                                 />
                               </div>
                             </div>
 
                             <div className="flex flex-col">
-                              <label className="block text-sm font-medium text-slate-700 mb-2">
-                                Estimated Guest Count
+                              <label className="block text-xs sm:text-sm font-medium text-slate-700 mb-1.5 sm:mb-2">
+                                Estimated Guests
                               </label>
                               <div className="relative">
                                 <Users className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
@@ -358,7 +326,7 @@ const BookUsModal: React.FC<BookUsModalProps> = ({ isOpen, onClose }) => {
                                   name="guestCount"
                                   value={formData.guestCount}
                                   onChange={handleInputChange}
-                                  className={`${inputBaseClasses} pl-10`}
+                                  className={`${inputBaseClasses} pl-9 sm:pl-10`}
                                   placeholder="e.g., 50"
                                   min="1"
                                 />
@@ -368,18 +336,18 @@ const BookUsModal: React.FC<BookUsModalProps> = ({ isOpen, onClose }) => {
 
                           {/* Message */}
                           <div className="flex flex-col">
-                            <label className="block text-sm font-medium text-slate-700 mb-2">
-                              Event Details & Requirements *
+                            <label className="block text-xs sm:text-sm font-medium text-slate-700 mb-1.5 sm:mb-2">
+                              Event Details *
                             </label>
                             <div className="relative">
-                              <MessageCircle className="absolute left-3 top-4 w-4 h-4 text-slate-400" />
+                              <MessageCircle className="absolute left-3 top-3 w-4 h-4 text-slate-400" />
                               <textarea
                                 name="message"
                                 value={formData.message}
                                 onChange={handleInputChange}
                                 rows={4}
-                                className={`${inputBaseClasses} pl-10 resize-none`}
-                                placeholder="Please describe your event vision, specific requirements, theme preferences, and any special considerations..."
+                                className={`${inputBaseClasses} pl-9 sm:pl-10 resize-none`}
+                                placeholder="Describe your event vision and requirements..."
                                 required
                               />
                             </div>
@@ -390,9 +358,9 @@ const BookUsModal: React.FC<BookUsModalProps> = ({ isOpen, onClose }) => {
                             whileHover={{ scale: isFormValid ? 1.02 : 1 }}
                             whileTap={{ scale: isFormValid ? 0.98 : 1 }}
                             disabled={!isFormValid || isSubmitting}
-                            className={`w-full py-4 rounded-lg font-semibold text-base transition-all duration-300 flex items-center justify-center space-x-2 ${
+                            className={`w-full py-3 sm:py-4 rounded-lg font-semibold text-sm sm:text-base transition-all duration-300 flex items-center justify-center space-x-2 ${
                               isFormValid
-                                ? 'bg-blue-600 text-white hover:bg-blue-700 shadow-lg'
+                                ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:shadow-lg'
                                 : 'bg-slate-200 text-slate-400 cursor-not-allowed'
                             }`}
                           >
@@ -401,33 +369,33 @@ const BookUsModal: React.FC<BookUsModalProps> = ({ isOpen, onClose }) => {
                                 <motion.div
                                   animate={{ rotate: 360 }}
                                   transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                                  className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full"
+                                  className="w-4 h-4 sm:w-5 sm:h-5 border-2 border-white/30 border-t-white rounded-full"
                                 />
                                 <span>Submitting...</span>
                               </>
                             ) : (
                               <>
                                 <span>Submit Booking Request</span>
-                                <Gift className="w-4 h-4" />
+        
                               </>
                             )}
                           </motion.button>
 
-                          <p className="text-center text-slate-500 text-sm">
-                            * Required fields. We respect your privacy and will never share your information.
+                          <p className="text-center text-slate-500 text-xs sm:text-sm">
+                            * Required fields
                           </p>
                         </form>
                       </motion.div>
                     </div>
                   </>
                 ) : (
-                  // Success State - Full content
-                  <div className="flex flex-col h-full">
-                    <div className="flex-1 flex items-center justify-center">
+                  // Success State
+                  <div className="flex flex-col h-full min-h-[400px] sm:min-h-0">
+                    <div className="flex-1 flex items-center justify-center p-6 sm:p-12">
                       <motion.div
                         initial={{ opacity: 0, scale: 0.9 }}
                         animate={{ opacity: 1, scale: 1 }}
-                        className="p-8 md:p-12 text-center"
+                        className="text-center"
                       >
                         <motion.div
                           animate={{ 
@@ -438,13 +406,13 @@ const BookUsModal: React.FC<BookUsModalProps> = ({ isOpen, onClose }) => {
                             repeat: Infinity, 
                             ease: "easeInOut" 
                           }}
-                          className="w-16 h-16 bg-green-500 rounded-full mx-auto mb-6 flex items-center justify-center"
+                          className="w-16 h-16 sm:w-20 sm:h-20 bg-green-500 rounded-full mx-auto mb-4 sm:mb-6 flex items-center justify-center"
                         >
                           <motion.svg
                             initial={{ pathLength: 0 }}
                             animate={{ pathLength: 1 }}
                             transition={{ duration: 1, ease: "easeInOut" }}
-                            className="w-8 h-8 text-white"
+                            className="w-8 h-8 sm:w-10 sm:h-10 text-white"
                             fill="none"
                             viewBox="0 0 24 24"
                             stroke="currentColor"
@@ -458,9 +426,9 @@ const BookUsModal: React.FC<BookUsModalProps> = ({ isOpen, onClose }) => {
                           </motion.svg>
                         </motion.div>
                         
-                        <h3 className="text-xl md:text-2xl font-bold text-slate-900 mb-4">Thank You!</h3>
-                        <p className="text-slate-600 mb-2">Your booking request has been submitted successfully.</p>
-                        <p className="text-sm text-slate-500">We'll contact you within 24 hours to discuss your event.</p>
+                        <h3 className="text-xl sm:text-2xl font-bold text-slate-900 mb-3 sm:mb-4">Thank You!</h3>
+                        <p className="text-sm sm:text-base text-slate-600 mb-2">Your booking request has been submitted.</p>
+                        <p className="text-xs sm:text-sm text-slate-500">We'll contact you within 24 hours.</p>
                       </motion.div>
                     </div>
                   </div>
