@@ -51,6 +51,12 @@ const Services = () => {
             title: 'Birthday Celebrations',
             description: 'Bring birthday dreams to life with unforgettable celebrations and flawless planning.',
             category: 'Birthdays'
+        },
+        {
+            image: 'https://friscofreshmarket.com/wp-content/uploads/2021/07/African-American-Vendors-At-Farmers-Market-In-Frisco.jpg',
+            title: 'Home of Experienced Vendors',
+            description: 'Connect with top-tier vendors to turn every event into an extraordinary experience.',
+            category: 'Vendors'
         }
     ];
 

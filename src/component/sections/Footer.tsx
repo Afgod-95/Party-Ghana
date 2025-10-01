@@ -48,7 +48,7 @@ const Footer = () => {
             {[
               {
                 title: 'Services',
-                links: ['Gift Registry', 'Event Planning', 'Guest Management', 'RSVP Tracking', 'Photo Sharing']
+                links: ['Event planning and management', 'Honeymoon Planning', 'Local Tours Planning ', 'Baby Naming Planning ', 'Birthday Celebrations', 'Home of Experienced vendors']
               },
               {
                 title: 'Company',
