@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Calendar, Share2, CheckCircle2 } from 'lucide-react';
+import { Calendar, Share2, Bell } from 'lucide-react';
 
 export default function StepsSection() {
   // Define complete color classes for each step
@@ -7,19 +7,19 @@ export default function StepsSection() {
     {
       icon: Calendar,
       title: 'Create Your Event',
-      description: 'Set up a beautiful event page with all details, gift preferences, and custom branding.',
+      description: 'We create a custom event page packed with all the details, your gift wish list, and your own unique branding—everything in one stylish spot!',
       gradientClasses: 'bg-gradient-to-br from-blue-400 to-blue-600'
     },
     {
       icon: Share2,
       title: 'Share with Guests',
-      description: 'Share your unique event link via WhatsApp, email, or social media for seamless access.',
+      description: 'Ping it on WhatsApp, drop it in an email, or post it like a pro—your custom event link is ready to share anywhere!',
       gradientClasses: 'bg-gradient-to-br from-purple-400 to-purple-600'
     },
     {
-      icon: CheckCircle2,
-      title: 'Track & Celebrate',
-      description: 'Monitor gifts in real-time, send thank-you notes, and celebrate your special moments.',
+      icon: Bell,
+      title: 'Set Reminders',
+      description: 'No need to chase—our friendly reminders make sure your guests are in the loop before the party starts!',
       gradientClasses: 'bg-gradient-to-br from-orange-400 to-orange-600'
     }
   ];

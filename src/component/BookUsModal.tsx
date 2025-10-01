@@ -9,22 +9,22 @@ interface BookUsModalProps {
 
 interface FormData {
   name: string;
-  email: string;
+  //email: string;
   phone: string;
-  eventType: string;
-  eventDate: string;
-  guestCount: string;
+  //eventType: string;
+  //eventDate: string;
+  //guestCount: string;
   message: string;
 }
 
 const BookUsModal: React.FC<BookUsModalProps> = ({ isOpen, onClose }) => {
   const [formData, setFormData] = useState<FormData>({
     name: '',
-    email: '',
+    //email: '',
     phone: '',
-    eventType: '',
-    eventDate: '',
-    guestCount: '',
+    //eventType: '',
+    //eventDate: '',
+    //guestCount: '',
     message: ''
   });
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
@@ -91,19 +91,19 @@ const BookUsModal: React.FC<BookUsModalProps> = ({ isOpen, onClose }) => {
       setIsSubmitted(false);
       setFormData({ 
         name: '', 
-        email: '', 
+        //email: '', 
         phone: '', 
-        eventType: '', 
-        eventDate: '', 
-        guestCount: '', 
+        //eventType: '', 
+        //eventDate: '', 
+        //guestCount: '', 
         message: '' 
       });
       onClose();
     }, 3000);
   };
 
-  const isFormValid = formData.name.trim() && formData.email.trim() && formData.phone.trim() && formData.eventType.trim() && formData.eventDate.trim() && formData.message.trim();
-
+  //const isFormValid = formData.name.trim() && formData.email.trim() && formData.phone.trim() && formData.eventType.trim() && formData.eventDate.trim() && formData.message.trim();
+  const isFormValid = formData.name.trim() && formData.phone.trim() && formData.message.trim();
   const inputBaseClasses = "w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 placeholder-slate-500 text-slate-900 bg-white";
   
   const eventTypes = [
@@ -210,21 +210,45 @@ const BookUsModal: React.FC<BookUsModalProps> = ({ isOpen, onClose }) => {
 
                             <div className="flex flex-col">
                               <label className="block text-xs sm:text-sm font-medium text-slate-700 mb-1.5 sm:mb-2">
-                                Email Address *
+                                Mobile Number *
                               </label>
-                              <input
-                                type="email"
-                                name="email"
-                                value={formData.email}
-                                onChange={handleInputChange}
-                                className={inputBaseClasses}
-                                placeholder="your.email@example.com"
-                                required
-                              />
+                              <div className="relative">
+                                <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
+                                <input
+                                  type="tel"
+                                  name="phone"
+                                  value={formData.phone}
+                                  onChange={handleInputChange}
+                                  className={`${inputBaseClasses} pl-9 sm:pl-10`}
+                                  placeholder="+233 24 123 4567"
+                                  required
+                                />
+                              </div>
                             </div>
+                            
+                            {/**EMAIL FIELD
+                             * 
+                             * 
+                              <div className="flex flex-col">
+                                <label className="block text-xs sm:text-sm font-medium text-slate-700 mb-1.5 sm:mb-2">
+                                  Email Address *
+                                </label>
+                                <input
+                                  type="email"
+                                  name="email"
+                                  value={formData.email}
+                                  onChange={handleInputChange}
+                                  className={inputBaseClasses}
+                                  placeholder="your.email@example.com"
+                                  required
+                                />
+                              </div>
+                             * 
+                             */}
+                            
                           </div>
 
-                          {/* Contact Details */}
+                          {/* Contact Details 
                           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                             <div className="flex flex-col">
                               <label className="block text-xs sm:text-sm font-medium text-slate-700 mb-1.5 sm:mb-2">
@@ -244,95 +268,99 @@ const BookUsModal: React.FC<BookUsModalProps> = ({ isOpen, onClose }) => {
                               </div>
                             </div>
 
-                            {/* Event Type Dropdown */}
-                            <div className="flex flex-col relative" ref={dropdownRef}>
-                              <label className="block text-xs sm:text-sm font-medium text-slate-700 mb-1.5 sm:mb-2">
-                                Event Type *
-                              </label>
-                              <div className="relative">
-                                <button
-                                  type="button"
-                                  onClick={() => setIsEventTypeOpen(!isEventTypeOpen)}
-                                  className={`${inputBaseClasses} text-left flex items-center justify-between ${
-                                    !formData.eventType ? 'text-slate-500' : 'text-slate-900'
-                                  }`}
-                                >
-                                  <span className="truncate">{formData.eventType || 'Select event type'}</span>
-                                  <motion.div
-                                    animate={{ rotate: isEventTypeOpen ? 180 : 0 }}
-                                    transition={{ duration: 0.2 }}
+                            {/* Event Type Dropdown 
+                              <div className="flex flex-col relative" ref={dropdownRef}>
+                                <label className="block text-xs sm:text-sm font-medium text-slate-700 mb-1.5 sm:mb-2">
+                                  Event Type *
+                                </label>
+                                <div className="relative">
+                                  <button
+                                    type="button"
+                                    onClick={() => setIsEventTypeOpen(!isEventTypeOpen)}
+                                    className={`${inputBaseClasses} text-left flex items-center justify-between ${
+                                      !formData.eventType ? 'text-slate-500' : 'text-slate-900'
+                                    }`}
                                   >
-                                    <ChevronDown className="w-4 h-4 text-slate-400 flex-shrink-0" />
-                                  </motion.div>
-                                </button>
-                                
-                                <AnimatePresence>
-                                  {isEventTypeOpen && (
+                                    <span className="truncate">{formData.eventType || 'Select event type'}</span>
                                     <motion.div
-                                      initial={{ opacity: 0, y: -10 }}
-                                      animate={{ opacity: 1, y: 0 }}
-                                      exit={{ opacity: 0, y: -10 }}
+                                      animate={{ rotate: isEventTypeOpen ? 180 : 0 }}
                                       transition={{ duration: 0.2 }}
-                                      className="absolute z-20 w-full mt-1 bg-white border border-slate-300 rounded-lg shadow-xl max-h-60 overflow-y-auto"
                                     >
-                                      {eventTypes.map((type) => (
-                                        <button
-                                          key={type}
-                                          type="button"
-                                          onClick={() => handleEventTypeSelect(type)}
-                                          className={`w-full px-3 sm:px-4 py-2.5 sm:py-3 text-left text-sm sm:text-base hover:bg-slate-50 transition-colors ${
-                                            formData.eventType === type 
-                                              ? 'bg-blue-50 text-blue-600 font-medium' 
-                                              : 'text-slate-700'
-                                          }`}
-                                        >
-                                          {type}
-                                        </button>
-                                      ))}
+                                      <ChevronDown className="w-4 h-4 text-slate-400 flex-shrink-0" />
                                     </motion.div>
-                                  )}
-                                </AnimatePresence>
+                                  </button>
+                                  
+                                  <AnimatePresence>
+                                    {isEventTypeOpen && (
+                                      <motion.div
+                                        initial={{ opacity: 0, y: -10 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        exit={{ opacity: 0, y: -10 }}
+                                        transition={{ duration: 0.2 }}
+                                        className="absolute z-20 w-full mt-1 bg-white border border-slate-300 rounded-lg shadow-xl max-h-60 overflow-y-auto"
+                                      >
+                                        {eventTypes.map((type) => (
+                                          <button
+                                            key={type}
+                                            type="button"
+                                            onClick={() => handleEventTypeSelect(type)}
+                                            className={`w-full px-3 sm:px-4 py-2.5 sm:py-3 text-left text-sm sm:text-base hover:bg-slate-50 transition-colors ${
+                                              formData.eventType === type 
+                                                ? 'bg-blue-50 text-blue-600 font-medium' 
+                                                : 'text-slate-700'
+                                            }`}
+                                          >
+                                            {type}
+                                          </button>
+                                        ))}
+                                      </motion.div>
+                                    )}
+                                  </AnimatePresence>
+                                </div>
                               </div>
-                            </div>
+                            
                           </div>
+                          */}
+                         
 
-                          {/* Event Details */}
-                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
-                            <div className="flex flex-col">
-                              <label className="block text-xs sm:text-sm font-medium text-slate-700 mb-1.5 sm:mb-2">
-                                Event Date *
-                              </label>
-                              <div className="relative">
-                                <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
-                                <input
-                                  type="date"
-                                  name="eventDate"
-                                  value={formData.eventDate}
-                                  onChange={handleInputChange}
-                                  className={`${inputBaseClasses} pl-9 sm:pl-10`}
-                                  required
-                                />
+                          {/* Event Details 
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+                              <div className="flex flex-col">
+                                <label className="block text-xs sm:text-sm font-medium text-slate-700 mb-1.5 sm:mb-2">
+                                  Event Date *
+                                </label>
+                                <div className="relative">
+                                  <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
+                                  <input
+                                    type="date"
+                                    name="eventDate"
+                                    value={formData.eventDate}
+                                    onChange={handleInputChange}
+                                    className={`${inputBaseClasses} pl-9 sm:pl-10`}
+                                    required
+                                  />
+                                </div>
+                              </div>
+
+                              <div className="flex flex-col">
+                                <label className="block text-xs sm:text-sm font-medium text-slate-700 mb-1.5 sm:mb-2">
+                                  Estimated Guests
+                                </label>
+                                <div className="relative">
+                                  <Users className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
+                                  <input
+                                    type="number"
+                                    name="guestCount"
+                                    value={formData.guestCount}
+                                    onChange={handleInputChange}
+                                    className={`${inputBaseClasses} pl-9 sm:pl-10`}
+                                    placeholder="e.g., 50"
+                                    min="1"
+                                  />
+                                </div>
                               </div>
                             </div>
-
-                            <div className="flex flex-col">
-                              <label className="block text-xs sm:text-sm font-medium text-slate-700 mb-1.5 sm:mb-2">
-                                Estimated Guests
-                              </label>
-                              <div className="relative">
-                                <Users className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
-                                <input
-                                  type="number"
-                                  name="guestCount"
-                                  value={formData.guestCount}
-                                  onChange={handleInputChange}
-                                  className={`${inputBaseClasses} pl-9 sm:pl-10`}
-                                  placeholder="e.g., 50"
-                                  min="1"
-                                />
-                              </div>
-                            </div>
-                          </div>
+                          */}
 
                           {/* Message */}
                           <div className="flex flex-col">

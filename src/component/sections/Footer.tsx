@@ -52,7 +52,7 @@ const Footer = () => {
               },
               {
                 title: 'Company',
-                links: ['About Us', 'Careers', 'Press', 'Blog', 'Contact']
+                links: ['About Us', 'Blog', 'Contact']
               },
               {
                 title: 'Support',
@@ -71,7 +71,7 @@ const Footer = () => {
                   {section.links.map((link, linkIndex) => (
                     <li key={linkIndex}>
                       <motion.a
-                        href="#"
+                        href="/"
                         whileHover={{ x: 5 }}
                         className="text-slate-400 hover:text-white transition-all duration-200"
                       >

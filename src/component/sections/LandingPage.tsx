@@ -2,72 +2,84 @@ import React from 'react'
 import { motion } from 'framer-motion'
 import { fadeInUp, staggerContainer } from './Services'
 import BackgroundImage from '@/assets/background.png'
-import { Sparkles, Gift, ArrowRight } from 'lucide-react'
+import { Sparkles, ArrowRight } from 'lucide-react'
+import BookUsModal from '../BookUsModal'
 
 const LandingPage = () => {
+  const [isModalOpen, setIsModalOpen] = React.useState<boolean>(false);
+  const handleBookApoointment = () => {
+    setIsModalOpen(true)
+  }
   return (
-   <section
-          className="relative overflow-hidden min-h-screen flex items-center bg-gradient-to-t"
-          id="home"
-          style={{
-            backgroundImage: `url(${BackgroundImage.src})`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            backgroundAttachment: 'fixed'
-          }}
+    <section
+      className="relative overflow-hidden min-h-screen flex items-center bg-gradient-to-t"
+      id="home"
+      style={{
+        backgroundImage: `url(${BackgroundImage.src})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundAttachment: 'fixed'
+      }}
+    >
+      {/* Dark fade overlay */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent" />
+
+      <div className="relative container mx-auto px-4 sm:px-6 lg:px-8 py-20">
+        <motion.div
+          initial="initial"
+          animate="animate"
+          variants={staggerContainer}
+          className="max-w-4xl mx-auto text-center"
         >
-          {/* Dark fade overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent" />
+          <motion.div
+            variants={fadeInUp}
+            className="inline-flex items-center space-x-2 bg-blue-50/90 backdrop-blur-sm text-blue-700 px-4 py-2 rounded-full text-sm font-medium mb-8"
+          >
+            <Sparkles className="w-4 h-4" />
+            <span>Ghana&apos;s Premier Gift Management Platform</span>
+          </motion.div>
 
-          <div className="relative container mx-auto px-4 sm:px-6 lg:px-8 py-20">
-            <motion.div
-              initial="initial"
-              animate="animate"
-              variants={staggerContainer}
-              className="max-w-4xl mx-auto text-center"
+          <motion.h1
+            variants={fadeInUp}
+            className="text-4xl sm:text-6xl font-bold text-white leading-tight mb-8"
+          >
+            Skip the stress of tracking gifts and managing presents.
+          </motion.h1>
+
+          <motion.p
+            variants={fadeInUp}
+            className="text-xl text-gray-200 max-w-2xl mx-auto mb-12 leading-relaxed"
+          >
+            We make gift management effortless — before, during, and after your event.
+            Focus on the moment. We’ll handle the rest.
+          </motion.p>
+
+          <motion.div
+            variants={fadeInUp}
+            className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-6"
+          >
+            <motion.button
+              onClick={handleBookApoointment}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="bg-white text-black px-8 py-4 rounded-full text-lg font-semibold hover:shadow-xl transition-all duration-200 flex items-center space-x-3"
             >
-              <motion.div
-                variants={fadeInUp}
-                className="inline-flex items-center space-x-2 bg-blue-50/90 backdrop-blur-sm text-blue-700 px-4 py-2 rounded-full text-sm font-medium mb-8"
-              >
-                <Sparkles className="w-4 h-4" />
-                <span>Ghana&apos;s Premier Gift Management Platform</span>
-              </motion.div>
+              <span>Get Started</span>
+            </motion.button>
+            <motion.button
+              onClick={handleBookApoointment}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-8 py-4 rounded-full text-lg font-semibold hover:shadow-xl transition-all duration-200 flex items-center space-x-3"
+            >
+              <span>Book Us Now</span>
+              <ArrowRight className="w-5 h-5" />
+            </motion.button>
 
-              <motion.h1
-                variants={fadeInUp}
-                className="text-4xl sm:text-6xl font-bold text-white leading-tight mb-8"
-              >
-                Transform Your
-                <span className="block text-white">
-                  Gift-Giving Experience
-                </span>
-              </motion.h1>
+            
+          </motion.div>
 
-              <motion.p
-                variants={fadeInUp}
-                className="text-xl text-gray-200 max-w-2xl mx-auto mb-12 leading-relaxed"
-              >
-                Streamline gift management for birthdays, weddings, and special occasions.
-                Create beautiful gift registries, track contributions, and ensure every celebration is memorable.
-              </motion.p>
-
-              <motion.div
-                variants={fadeInUp}
-                className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-6"
-              >
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-8 py-4 rounded-full text-lg font-semibold hover:shadow-xl transition-all duration-200 flex items-center space-x-3"
-                >
-                  <Gift className="w-5 h-5" />
-                  <span>Start Managing Gifts</span>
-                  <ArrowRight className="w-5 h-5" />
-                </motion.button>
-              </motion.div>
-
-              {/* Stats */}
+          {/* Stats 
               <motion.div
                 variants={fadeInUp}
                 className="grid grid-cols-3 gap-8 mt-16 pt-16 border-t border-white/20"
@@ -97,9 +109,12 @@ const LandingPage = () => {
                   </motion.div>
                 ))}
               </motion.div>
-            </motion.div>
-          </div>
-        </section>
+
+              */}
+        </motion.div>
+      </div>
+      <BookUsModal isOpen = {isModalOpen} onClose={() => setIsModalOpen(false)} />
+    </section>
   )
 }
 

@@ -1,6 +1,7 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 import { Calendar, Gift, Users, Award } from 'lucide-react'
+import Link from 'next/link';
 
 const AboutUs = () => {
   const stats = [
@@ -31,8 +32,7 @@ const AboutUs = () => {
           </h2>
           
           <p className="text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed">
-            With over five years of excellence in event management and gifting solutions, 
-            we bring precision and passion to every celebration.
+            At Party Ghana, we believe every moment deserves to be memorable—and every gift should feel personal.
           </p>
         </div>
 
@@ -54,22 +54,30 @@ const AboutUs = () => {
                 
                 <div className="space-y-6 text-slate-700 leading-relaxed">
                   <p>
-                    Founded on the principle that every celebration deserves perfection, 
-                    <strong className="text-slate-900"> Party Ghana</strong> has been at the forefront 
-                    of event management and gifting solutions since 2018. Our journey began with 
-                    a simple mission: to transform ordinary moments into extraordinary memories.
+                    Party Ghana has been all about good vibes, great memories, and making every 
+                    celebration a total vibe! We spice up everyday moments and 
+                    remain your ultimate plug for unforgettable parties and awesome gifting.
                   </p>
 
                   <p>
-                    We specialize in creating bespoke experiences that reflect your unique vision. 
-                    From intimate gatherings to large-scale corporate events, our team of seasoned 
-                    professionals ensures every detail is meticulously planned and executed.
+                    We specialize in curating thoughtful, beautifully designed gifting experiences 
+                    and seamless event solutions for individuals, families, associations, brands, and 
+                    businesses. Whether you're planning a milestone celebration, a corporate retreat, 
+                    or looking to elevate client appreciation through meaningful gifts and events, 
+                    we’re here to make it effortless and unforgettable.
                   </p>
 
                   <p>
-                    What sets us apart is our commitment to understanding your story. We believe 
-                    that successful events are built on collaboration, attention to detail, and 
-                    a deep understanding of our clients' aspirations.
+                    From concept to execution, we combine creativity, attention to detail, and exceptional 
+                    service to bring your vision to life. 
+                    Our curated gifts and event designs reflect your story, your style, and your purpose.
+                    Because it’s not just about the event or the gift—it’s about the feeling it leaves behind.
+                  </p>
+                  <p>
+                    Let’s create something unforgettable together.
+                  </p>
+                  <p>
+                    Keep only the satisfaction rate and years of experience. Remove events executed and clients served. 
                   </p>
                 </div>
               </div>
@@ -112,22 +120,21 @@ const AboutUs = () => {
             className="bg-slate-900 rounded-2xl p-12 text-center"
           >
             <blockquote className="text-2xl md:text-3xl font-light text-white leading-relaxed mb-8 max-w-4xl mx-auto">
-              "Our philosophy is simple: exceptional service, meticulous planning, and 
-              unforgettable experiences. We don't just plan events—we create memories 
-              that last a lifetime."
+              "Our philosophy is simple: good vibes, smooth planning, and moments you’ll never forget. We don’t just 
+              throw events—we help you make stories worth telling!"
             </blockquote>
             
             <div className="flex items-center justify-center space-x-4">
               <div className="w-px h-12 bg-slate-600"></div>
               <div className="text-left">
-                <p className="text-white font-semibold">Sarah Mensah</p>
+                <Link href = 'https://www.linkedin.com/in/prince-baah-duodu-pbd-4b407514/' target='blank'  className="text-white font-semibold hover:text-blue-300 transition-colors duration-300">Prince Baah-Duodu</Link>
                 <p className="text-slate-400 text-sm">Founder & CEO</p>
               </div>
               <div className="w-px h-12 bg-slate-600"></div>
             </div>
           </motion.div>
 
-          {/* CTA Section */}
+          {/* CTA Section 
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -135,13 +142,15 @@ const AboutUs = () => {
             transition={{ duration: 0.6, delay: 0.4 }}
             className="text-center mt-16"
           >
+            <p> Start Planning Your Event</p>
             <button className="bg-blue-600 text-white px-8 py-4 rounded-lg font-semibold hover:bg-blue-700 transition-colors duration-300 shadow-lg">
-              Start Planning Your Event
+              Book Us Now
             </button>
             <p className="text-slate-600 text-sm mt-4">
               Let's discuss your vision and bring it to life
             </p>
           </motion.div>
+          */}
         </div>
       </div>
     </section>
