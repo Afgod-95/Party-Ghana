@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react'
+import React, { useEffect, useState, useMemo } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ArrowRight, X, Menu } from 'lucide-react'
 import Logo from '@/assets/Logo.png'
@@ -41,6 +41,8 @@ const NavBar: React.FC<NavBarProps> = ({
     setIsMenuOpen(false);
   };
 
+  const [showAppointmentBtn, setShowAppointmentBtn] = useState<boolean>(false);
+
   // Track active section on scroll
   useEffect(() => {
     const handleScroll = () => {
@@ -78,6 +80,17 @@ const NavBar: React.FC<NavBarProps> = ({
       document.body.style.width = '';
     };
   }, [isMenuOpen]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowAppointmentBtn(window.scrollY > window.innerHeight);
+      console.log(window.innerHeight)
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
 
   return (
     <motion.header
@@ -129,10 +142,28 @@ const NavBar: React.FC<NavBarProps> = ({
                 )}
               </motion.button>
             ))}
+            {showAppointmentBtn && (
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                initial={{ opacity: 0, x: 100 }}   // start hidden, slide from right
+                animate={{ opacity: 1, x: 0 }}     // animate in
+                exit={{ opacity: 0, x: 100 }}      // animate out when hidden
+                transition={{ type: "spring", stiffness: 120, damping: 20 }}
+                onClick={() => setIsModalOpen(true)}
+                className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-6 py-2.5 rounded-full text-sm font-semibold hover:shadow-lg transition-all duration-200 flex items-center space-x-2"
+              >
+                <span className="text-center">Book us Now</span>
+              </motion.button>
+            )}
           </div>
 
+
+          {/* Register Button 
           <div className="hidden lg:flex items-center gap-4">
-            <motion.button
+            
+            
+                 <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => setIsModalOpen(true)}
@@ -149,7 +180,12 @@ const NavBar: React.FC<NavBarProps> = ({
             >
               <span>Login</span>
             </motion.button>
+            
+           
+
+
           </div>
+          */}
 
           <div className="lg:hidden">
             <motion.button
@@ -194,7 +230,9 @@ const NavBar: React.FC<NavBarProps> = ({
                     {item.name}
                   </motion.button>
                 ))}
-                <motion.button
+                {/* Register Button */}
+                {/* 
+                    <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => setIsModalOpen(true)}
@@ -211,6 +249,8 @@ const NavBar: React.FC<NavBarProps> = ({
                 >
                   <span className='text-center'>Login</span>
                 </motion.button>
+                */}
+
               </div>
             </motion.div>
           )}

@@ -20,17 +20,16 @@ const Features = () => {
         className="py-24 bg-white"
       >
         <div className="container mx-auto px-4 sm:px-6 max-w-7xl">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
+          <h2 className="text-4xl font-bold text-slate-900 mb-8 text-center">
+            Why Choose PartyGhana.Com?
+          </h2>
+          <div className="grid lg:grid-cols-2 gap-16 items-start">
             <motion.div
               initial={{ opacity: 0, x: -50 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
             >
-              <h2 className="text-4xl font-bold text-slate-900 mb-8">
-                Why Choose PartyGhana.Com?
-              </h2>
-
               <div className="space-y-8">
                 {[
                   {
@@ -129,8 +128,8 @@ const Features = () => {
           </div>
         </div>
       </motion.section>
-      <BookUsModal isOpen = {isModalOpen} onClose={() => setIsModalOpen(false)}/>
-    
+      <BookUsModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+
     </>
   )
 }

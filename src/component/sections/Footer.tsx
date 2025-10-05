@@ -1,11 +1,12 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 import { Gift, Instagram, Facebook, Twitter } from 'lucide-react'
+import Link from 'next/link'
 
 const Footer = () => {
   return (
     <>
-    {/* Footer */}
+      {/* Footer */}
       <motion.footer
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
@@ -48,15 +49,31 @@ const Footer = () => {
             {[
               {
                 title: 'Services',
-                links: ['Event planning and management', 'Honeymoon Planning', 'Local Tours Planning ', 'Baby Naming Planning ', 'Birthday Celebrations', 'Home of Experienced vendors']
+                links: [
+                  { label: 'Event planning and management', href: '/packages' },
+                  { label: 'Honeymoon Planning', href: '/packages' },
+                  { label: 'Local Tours Planning', href: '/packages' },
+                  { label: 'Baby Naming Planning', href: '/packages'  },
+                  { label: 'Birthday Celebrations', href: '/packages'  },
+                  { label: 'Home of Experienced vendors', href: null }
+                ]
               },
               {
                 title: 'Company',
-                links: ['About Us', 'Blog', 'Contact']
+                links: [
+                  { label: 'About Us', href: '/about' },
+                  { label: 'Blog', href: '/blog' },
+                  { label: 'Contact', href: '/contact-us' }]
               },
               {
                 title: 'Support',
-                links: ['Help Center', 'Safety', 'Community Guidelines', 'Privacy Policy', 'Terms of Service']
+                links: [
+                  { label: 'Help Center', href: '/help' },
+                  { label: 'Safety', href: '/safety' },
+                  { label: 'Community Guidelines', href: '/community-guidelines' },
+                  { label: 'Privacy Policy', href: '/privacy' },
+                  { label: 'Terms of Service', href: '/terms' }
+                ]
               }
             ].map((section, index) => (
               <motion.div
@@ -70,13 +87,16 @@ const Footer = () => {
                 <ul className="space-y-2">
                   {section.links.map((link, linkIndex) => (
                     <li key={linkIndex}>
-                      <motion.a
-                        href="/"
-                        whileHover={{ x: 5 }}
-                        className="text-slate-400 hover:text-white transition-all duration-200"
-                      >
-                        {link}
-                      </motion.a>
+                      {typeof link.href === 'string' ? (
+                        <Link
+                          href={link.href}
+                          className="text-slate-400 hover:text-white transition-all duration-200"
+                        >
+                          <motion.p whileHover={{ x: 5 }}>{link.label}</motion.p>
+                        </Link>
+                      ) : (
+                        <span className="text-slate-400">{link.label}</span>
+                      )}
                     </li>
                   ))}
                 </ul>
@@ -92,7 +112,7 @@ const Footer = () => {
             className="border-t border-slate-800 pt-8 text-center"
           >
             <p className="text-slate-400">
-              © {new Date ().getFullYear()} Party Ghana. All rights reserved.
+              © {new Date().getFullYear()} Party Ghana. All rights reserved.
             </p>
           </motion.div>
         </div>

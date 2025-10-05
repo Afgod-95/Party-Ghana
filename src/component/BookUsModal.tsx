@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Phone, User, MessageCircle, Calendar, Users, ChevronDown } from 'lucide-react';
-
+import axios from 'axios';
+import { formEndpoint } from '@/constants/FormEndpoint';
+import PhoneField from './PhoneInput';
 interface BookUsModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -29,6 +31,10 @@ const BookUsModal: React.FC<BookUsModalProps> = ({ isOpen, onClose }) => {
   });
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+
+
+
   const [isEventTypeOpen, setIsEventTypeOpen] = useState<boolean>(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -54,7 +60,7 @@ const BookUsModal: React.FC<BookUsModalProps> = ({ isOpen, onClose }) => {
     };
 
     document.addEventListener('mousedown', handleClickOutside);
-    
+
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
@@ -79,33 +85,40 @@ const BookUsModal: React.FC<BookUsModalProps> = ({ isOpen, onClose }) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setError(null);
 
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    
-    setIsSubmitting(false);
-    setIsSubmitted(true);
-    
-    // Reset form after 3 seconds and close modal
-    setTimeout(() => {
-      setIsSubmitted(false);
-      setFormData({ 
-        name: '', 
-        //email: '', 
-        phone: '', 
-        //eventType: '', 
-        //eventDate: '', 
-        //guestCount: '', 
-        message: '' 
-      });
-      onClose();
-    }, 3000);
+    try {
+      await axios.post(formEndpoint, formData);
+
+      setIsSubmitted(true);
+
+      // Reset form after 3 seconds and close modal
+      setTimeout(() => {
+        setIsSubmitted(false);
+        setFormData({
+          name: "",
+          // email: "",
+          phone: "",
+          // eventType: "",
+          // eventDate: "",
+          // guestCount: "",
+          message: ""
+        });
+        onClose();
+      }, 3000);
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      setError("Something went wrong. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
+
 
   //const isFormValid = formData.name.trim() && formData.email.trim() && formData.phone.trim() && formData.eventType.trim() && formData.eventDate.trim() && formData.message.trim();
   const isFormValid = formData.name.trim() && formData.phone.trim() && formData.message.trim();
   const inputBaseClasses = "w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 placeholder-slate-500 text-slate-900 bg-white";
-  
+
   const eventTypes = [
     'Wedding',
     'Birthday Party',
@@ -134,17 +147,17 @@ const BookUsModal: React.FC<BookUsModalProps> = ({ isOpen, onClose }) => {
               initial={{ scale: 0.95, opacity: 0, y: 20 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
               exit={{ scale: 0.95, opacity: 0, y: 20 }}
-              transition={{ 
-                type: "spring", 
-                stiffness: 300, 
-                damping: 30 
+              transition={{
+                type: "spring",
+                stiffness: 300,
+                damping: 30
               }}
               className="relative w-full h-full sm:h-auto sm:max-w-2xl sm:mx-auto flex items-stretch sm:items-center justify-center"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Modal Content */}
               <div className="bg-white w-full h-full sm:h-auto sm:rounded-2xl shadow-2xl border-0 sm:border sm:border-slate-200 overflow-hidden flex flex-col sm:max-h-[90vh]">
-                
+
                 {/* Close Button */}
                 <motion.button
                   whileHover={{ scale: 1.05 }}
@@ -167,14 +180,24 @@ const BookUsModal: React.FC<BookUsModalProps> = ({ isOpen, onClose }) => {
                       >
                         Book Our Services
                       </motion.h2>
-                      
+
                       <motion.p
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ delay: 0.3 }}
                         className="text-blue-100 text-center text-xs sm:text-sm lg:text-base"
                       >
-                        Complete the form below and we'll get back to you within 24 hours
+                        Hi! We appreciate you and love to journey with you.
+
+                      </motion.p>
+                      <motion.p
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: 0.3 }}
+                        className="text-blue-100 text-center text-xs sm:text-sm lg:text-base"
+                      >
+
+                        Please complete this form, click submit, and let’s give you our first call!
                       </motion.p>
                     </div>
 
@@ -187,7 +210,7 @@ const BookUsModal: React.FC<BookUsModalProps> = ({ isOpen, onClose }) => {
                         className="p-4 sm:p-6 lg:p-8"
                       >
                         <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
-                          
+
                           {/* Personal Information */}
                           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                             <div className="flex flex-col">
@@ -208,25 +231,24 @@ const BookUsModal: React.FC<BookUsModalProps> = ({ isOpen, onClose }) => {
                               </div>
                             </div>
 
-                            <div className="flex flex-col">
-                              <label className="block text-xs sm:text-sm font-medium text-slate-700 mb-1.5 sm:mb-2">
-                                Mobile Number *
-                              </label>
-                              <div className="relative">
-                                <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
-                                <input
-                                  type="tel"
-                                  name="phone"
-                                  value={formData.phone}
-                                  onChange={handleInputChange}
-                                  className={`${inputBaseClasses} pl-9 sm:pl-10`}
-                                  placeholder="+233 24 123 4567"
-                                  required
-                                />
-                              </div>
-                            </div>
-                            
-                            {/**EMAIL FIELD
+
+
+
+
+                            <PhoneField
+                              value={formData.phone}
+                              onChange={(val) =>
+                                setFormData((prev) => ({
+                                  ...prev,
+                                  phone: val || "",
+                                }))
+                              }
+                            />
+
+
+                      
+
+                          {/**EMAIL FIELD
                              * 
                              * 
                               <div className="flex flex-col">
@@ -245,10 +267,10 @@ const BookUsModal: React.FC<BookUsModalProps> = ({ isOpen, onClose }) => {
                               </div>
                              * 
                              */}
-                            
-                          </div>
 
-                          {/* Contact Details 
+                        </div>
+
+                        {/* Contact Details 
                           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                             <div className="flex flex-col">
                               <label className="block text-xs sm:text-sm font-medium text-slate-700 mb-1.5 sm:mb-2">
@@ -321,9 +343,9 @@ const BookUsModal: React.FC<BookUsModalProps> = ({ isOpen, onClose }) => {
                             
                           </div>
                           */}
-                         
 
-                          {/* Event Details 
+
+                        {/* Event Details 
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                               <div className="flex flex-col">
                                 <label className="block text-xs sm:text-sm font-medium text-slate-700 mb-1.5 sm:mb-2">
@@ -362,111 +384,125 @@ const BookUsModal: React.FC<BookUsModalProps> = ({ isOpen, onClose }) => {
                             </div>
                           */}
 
-                          {/* Message */}
-                          <div className="flex flex-col">
-                            <label className="block text-xs sm:text-sm font-medium text-slate-700 mb-1.5 sm:mb-2">
-                              Event Details *
-                            </label>
-                            <div className="relative">
-                              <MessageCircle className="absolute left-3 top-3 w-4 h-4 text-slate-400" />
-                              <textarea
-                                name="message"
-                                value={formData.message}
-                                onChange={handleInputChange}
-                                rows={4}
-                                className={`${inputBaseClasses} pl-9 sm:pl-10 resize-none`}
-                                placeholder="Describe your event vision and requirements..."
-                                required
-                              />
-                            </div>
-                          </div>
-
-                          {/* Submit Button */}
-                          <motion.button
-                            whileHover={{ scale: isFormValid ? 1.02 : 1 }}
-                            whileTap={{ scale: isFormValid ? 0.98 : 1 }}
-                            disabled={!isFormValid || isSubmitting}
-                            className={`w-full py-3 sm:py-4 rounded-lg font-semibold text-sm sm:text-base transition-all duration-300 flex items-center justify-center space-x-2 ${
-                              isFormValid
-                                ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:shadow-lg'
-                                : 'bg-slate-200 text-slate-400 cursor-not-allowed'
-                            }`}
-                          >
-                            {isSubmitting ? (
-                              <>
-                                <motion.div
-                                  animate={{ rotate: 360 }}
-                                  transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                                  className="w-4 h-4 sm:w-5 sm:h-5 border-2 border-white/30 border-t-white rounded-full"
-                                />
-                                <span>Submitting...</span>
-                              </>
-                            ) : (
-                              <>
-                                <span>Submit Booking Request</span>
-        
-                              </>
-                            )}
-                          </motion.button>
-
-                          <p className="text-center text-slate-500 text-xs sm:text-sm">
-                            * Required fields
-                          </p>
-                        </form>
-                      </motion.div>
-                    </div>
-                  </>
-                ) : (
-                  // Success State
-                  <div className="flex flex-col h-full min-h-[400px] sm:min-h-0">
-                    <div className="flex-1 flex items-center justify-center p-6 sm:p-12">
-                      <motion.div
-                        initial={{ opacity: 0, scale: 0.9 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        className="text-center"
-                      >
-                        <motion.div
-                          animate={{ 
-                            scale: [1, 1.05, 1],
-                          }}
-                          transition={{ 
-                            duration: 2, 
-                            repeat: Infinity, 
-                            ease: "easeInOut" 
-                          }}
-                          className="w-16 h-16 sm:w-20 sm:h-20 bg-green-500 rounded-full mx-auto mb-4 sm:mb-6 flex items-center justify-center"
-                        >
-                          <motion.svg
-                            initial={{ pathLength: 0 }}
-                            animate={{ pathLength: 1 }}
-                            transition={{ duration: 1, ease: "easeInOut" }}
-                            className="w-8 h-8 sm:w-10 sm:h-10 text-white"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={3}
-                              d="M5 13l4 4L19 7"
+                        {/* Message */}
+                        <div className="flex flex-col">
+                          <label className="block text-xs sm:text-sm font-medium text-slate-700 mb-1.5 sm:mb-2">
+                            Event Details *
+                          </label>
+                          <div className="relative">
+                            <MessageCircle className="absolute left-3 top-3 w-4 h-4 text-slate-400" />
+                            <textarea
+                              name="message"
+                              value={formData.message}
+                              onChange={handleInputChange}
+                              rows={4}
+                              className={`${inputBaseClasses} pl-9 sm:pl-10 resize-none`}
+                              placeholder="Please tell us what you are booking us for…"
+                              required
                             />
-                          </motion.svg>
-                        </motion.div>
-                        
-                        <h3 className="text-xl sm:text-2xl font-bold text-slate-900 mb-3 sm:mb-4">Thank You!</h3>
-                        <p className="text-sm sm:text-base text-slate-600 mb-2">Your booking request has been submitted.</p>
-                        <p className="text-xs sm:text-sm text-slate-500">We'll contact you within 24 hours.</p>
-                      </motion.div>
-                    </div>
+                          </div>
+                        </div>
+
+
+                        {/* submit button */}
+                        {/* Error Message */}
+                        {error && (
+                          <motion.div
+                            initial={{ opacity: 0, y: -10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -10 }}
+                            className="p-3 rounded-lg bg-red-50 border border-red-200 text-red-600 text-sm sm:text-base"
+                          >
+                            {error}
+                          </motion.div>
+                        )}
+
+                        {/* Submit Button */}
+                        <motion.button
+                          whileHover={{ scale: isFormValid ? 1.02 : 1 }}
+                          whileTap={{ scale: isFormValid ? 0.98 : 1 }}
+                          disabled={!isFormValid || isSubmitting}
+                          className={`w-full py-3 sm:py-4 rounded-lg font-semibold text-sm sm:text-base transition-all duration-300 flex items-center justify-center space-x-2 ${isFormValid
+                            ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:shadow-lg'
+                            : 'bg-slate-200 text-slate-400 cursor-not-allowed'
+                            }`}
+                        >
+                          {isSubmitting ? (
+                            <>
+                              <motion.div
+                                animate={{ rotate: 360 }}
+                                transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                                className="w-4 h-4 sm:w-5 sm:h-5 border-2 border-white/30 border-t-white rounded-full"
+                              />
+                              <span>Submitting...</span>
+                            </>
+                          ) : (
+                            <>
+                              <span>Submit Booking Request</span>
+
+                            </>
+                          )}
+                        </motion.button>
+
+                        <p className="text-center text-slate-500 text-xs sm:text-sm">
+                          * Required fields
+                        </p>
+                      </form>
+                    </motion.div>
                   </div>
-                )}
+              </>
+              ) : (
+              // Success State
+              <div className="flex flex-col h-full min-h-[400px] sm:min-h-0">
+                <div className="flex-1 flex items-center justify-center p-6 sm:p-12">
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    className="text-center"
+                  >
+                    <motion.div
+                      animate={{
+                        scale: [1, 1.05, 1],
+                      }}
+                      transition={{
+                        duration: 2,
+                        repeat: Infinity,
+                        ease: "easeInOut"
+                      }}
+                      className="w-16 h-16 sm:w-20 sm:h-20 bg-green-500 rounded-full mx-auto mb-4 sm:mb-6 flex items-center justify-center"
+                    >
+                      <motion.svg
+                        initial={{ pathLength: 0 }}
+                        animate={{ pathLength: 1 }}
+                        transition={{ duration: 1, ease: "easeInOut" }}
+                        className="w-8 h-8 sm:w-10 sm:h-10 text-white"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={3}
+                          d="M5 13l4 4L19 7"
+                        />
+                      </motion.svg>
+                    </motion.div>
+
+                    <h3 className="text-xl sm:text-2xl font-bold text-slate-900 mb-3 sm:mb-4">Thank you for taking time to complete the form.</h3>
+                    <p className="text-sm sm:text-base text-slate-600 mb-2">It is now on us to call you. Speak to you within 24 hours.</p>
+
+                  </motion.div>
+                </div>
               </div>
-            </motion.div>
+                )}
+            </div>
           </motion.div>
-        </>
-      )}
-    </AnimatePresence>
+        </motion.div>
+    </>
+  )
+}
+    </AnimatePresence >
   );
 };
 

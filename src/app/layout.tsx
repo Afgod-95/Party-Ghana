@@ -64,8 +64,9 @@ export const metadata: Metadata = {
 // Simple fallback loader
 function LoadingSpinner() {
   return (
-    <div className="flex h-screen items-center justify-center bg-white">
+    <div className="flex h-screen items-center flex-col justify-center bg-white gap-4">
       <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-purple-500 border-solid"></div>
+      <p className="text-center text-sm text-gray-500">Please wait while we load the page...</p>
     </div>
   );
 }

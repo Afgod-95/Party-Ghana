@@ -1,0 +1,1 @@
+export const formEndpoint = 'https://getform.io/f/akkpxjga'

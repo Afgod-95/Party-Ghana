@@ -1,6 +1,9 @@
 import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ArrowRight, Phone, Mail, MapPin, CheckCircle } from 'lucide-react'
+import { ArrowRight, Phone, Mail, MapPin, CheckCircle, Link } from 'lucide-react'
+import axios from 'axios'
+import { formEndpoint } from '@/constants/FormEndpoint'
+import PhoneField from '../PhoneInput'
 
 const ContactUs = () => {
   const [formData, setFormData] = useState({
@@ -9,21 +12,24 @@ const ContactUs = () => {
     phone: '',
     company: '',
     message: ''
-  })
+  });
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
+  const [error, setError] = useState<string | null>(null);
 
   const contactInfo = [
     {
       icon: Phone,
       label: 'Phone',
-      value: '+233 24 123 4567',
-      subtitle: 'Mon-Fri, 8am-6pm'
+      value: '+233 53 101 4722',
+      subtitle: 'Mon-Fri, 8am-6pm',
+      href: 'tel/+233531014722'
     },
     {
       icon: Mail,
       label: 'Email',
-      value: 'hello@partygiftgh.com',
+      value: 'hellopartyghana@gmail.com',
+      href: `mailto:hellopartyghana@gmail.com`,
       subtitle: 'We reply within 24 hours'
     },
     {
@@ -44,27 +50,39 @@ const ContactUs = () => {
     }))
   }
 
-  const handleSubmit = async ( e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setIsSubmitting(true)
+    setError(null);
 
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 2000))
-    
-    setIsSubmitting(false)
-    setIsSubmitted(true)
-    
-    // Reset form after 5 seconds
-    setTimeout(() => {
-      setIsSubmitted(false)
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        company: '',
-        message: ''
-      })
-    }, 5000)
+    try {
+      if (!isFormValid) {
+        setError("Please fill in all required fields.");
+        setIsSubmitting(false);
+        return;
+      }
+
+      // Simulate API call
+      await axios.post(formEndpoint, formData)
+      setIsSubmitting(false)
+      setIsSubmitted(true)
+
+      // Reset form after 5 seconds
+      setTimeout(() => {
+        setIsSubmitted(false)
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          company: '',
+          message: ''
+        })
+      }, 5000)
+
+    } catch (error) {
+      setError("Something went wrong, please try again.")
+      console.log(error)
+    }
   }
 
   const isFormValid = formData.name.trim() && formData.email.trim() && formData.phone.trim() && formData.message.trim()
@@ -85,7 +103,7 @@ const ContactUs = () => {
               Get In Touch
             </h2>
             <p className="text-lg text-slate-600 max-w-2xl mx-auto">
-              Ready to create an unforgettable experience? Let's discuss your event vision 
+              Ready to create an unforgettable experience? Let's discuss your event vision
               and how we can bring it to life with precision and creativity.
             </p>
           </motion.div>
@@ -104,7 +122,7 @@ const ContactUs = () => {
                   Contact Information
                 </h3>
                 <p className="text-slate-600 mb-8">
-                  We're here to help you plan the perfect event. Reach out to us through 
+                  We're here to help you plan the perfect event. Reach out to us through
                   any of the following channels.
                 </p>
               </div>
@@ -125,7 +143,9 @@ const ContactUs = () => {
                     </div>
                     <div>
                       <p className="font-semibold text-slate-900">{item.label}</p>
-                      <p className="text-slate-800 text-lg font-medium">{item.value}</p>
+                      <a href={item.href} className="text-slate-800 text-lg font-medium">
+                        <p className="text-slate-800 text-lg font-medium">{item.value}</p>
+                      </a>
                       <p className="text-slate-500 text-sm">{item.subtitle}</p>
                     </div>
                   </motion.div>
@@ -136,7 +156,7 @@ const ContactUs = () => {
               <div className="bg-blue-50 rounded-xl p-6 border border-blue-100">
                 <h4 className="font-semibold text-blue-900 mb-2">Response Time</h4>
                 <p className="text-blue-800 text-sm">
-                  We typically respond to all inquiries within 2-4 hours during business days. 
+                  We typically respond to all inquiries within 2-4 hours during business days.
                   For urgent matters, please call us directly.
                 </p>
               </div>
@@ -163,7 +183,7 @@ const ContactUs = () => {
                         Send us a Message
                       </h3>
                       <p className="text-slate-600 text-center">
-                        Complete the form below and we'll get back to you within 24 hours.
+                        Please complete the form below and we'll get back to you within 24 hours.
                       </p>
                     </div>
 
@@ -202,20 +222,15 @@ const ContactUs = () => {
 
                       {/* Contact Details */}
                       <div className="grid md:grid-cols-2 gap-6">
-                        <div className="flex flex-col">
-                          <label className="block text-sm font-medium text-slate-700 mb-2">
-                            Mobile Number *
-                          </label>
-                          <input
-                            type="tel"
-                            name="phone"
-                            value={formData.phone}
-                            onChange={handleInputChange}
-                            required
-                            className={inputBaseClasses}
-                            placeholder="+233 24 123 4567"
-                          />
-                        </div>
+                        <PhoneField
+                          value={formData.phone}
+                          onChange={(val) =>
+                            setFormData((prev) => ({
+                              ...prev,
+                              phone: val || "",
+                            }))
+                          }
+                        />
                         <div className="flex flex-col">
                           <label className="block text-sm font-medium text-slate-700 mb-2">
                             Company/Organization
@@ -246,6 +261,16 @@ const ContactUs = () => {
                           placeholder="Please describe your event vision, specific requirements, theme preferences, and any special considerations..."
                         />
                       </div>
+                      {error && (
+                        <motion.div
+                          initial={{ opacity: 0, y: -10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -10 }}
+                          className="p-3 rounded-lg bg-red-50 border border-red-200 text-red-600 text-sm sm:text-base"
+                        >
+                          {error}
+                        </motion.div>
+                      )}
 
                       {/* Submit Button */}
                       <motion.button
@@ -253,11 +278,10 @@ const ContactUs = () => {
                         whileTap={{ scale: isFormValid ? 0.98 : 1 }}
                         disabled={!isFormValid || isSubmitting}
                         type="submit"
-                        className={`w-full py-4 rounded-lg font-semibold text-base transition-all duration-300 flex items-center justify-center space-x-2 ${
-                          isFormValid && !isSubmitting
-                            ? 'bg-blue-600 text-white hover:bg-blue-700 shadow-lg'
-                            : 'bg-slate-200 text-slate-400 cursor-not-allowed'
-                        }`}
+                        className={`w-full py-4 rounded-lg font-semibold text-base transition-all duration-300 flex items-center justify-center space-x-2 ${isFormValid && !isSubmitting
+                          ? 'bg-blue-600 text-white hover:bg-blue-700 shadow-lg'
+                          : 'bg-slate-200 text-slate-400 cursor-not-allowed'
+                          }`}
                       >
                         {isSubmitting ? (
                           <>
@@ -293,21 +317,21 @@ const ContactUs = () => {
                     <motion.div
                       initial={{ scale: 0 }}
                       animate={{ scale: 1 }}
-                      transition={{ 
-                        type: "spring", 
-                        stiffness: 200, 
+                      transition={{
+                        type: "spring",
+                        stiffness: 200,
                         damping: 15,
-                        delay: 0.2 
+                        delay: 0.2
                       }}
                       className="w-20 h-20 bg-green-100 rounded-full mx-auto mb-6 flex items-center justify-center"
                     >
                       <CheckCircle className="w-10 h-10 text-green-600" />
                     </motion.div>
-                    
+
                     <h3 className="text-2xl font-bold text-slate-900 mb-4">
                       Message Sent Successfully!
                     </h3>
-                    
+
                     <motion.p
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
