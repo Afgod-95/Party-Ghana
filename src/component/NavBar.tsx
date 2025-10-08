@@ -26,7 +26,8 @@ const NavBar: React.FC<NavBarProps> = ({
     { name: 'How It Works', href: 'how-it-works' },
     { name: 'Services', href: 'services' },
     { name: 'About Us', href: 'about-us' },
-    { name: 'Contact', href: 'contact' }
+    { name: 'Contact', href: 'contact' },
+    { name: "Event Packages", href: "event-packages" }
   ], []);
 
   // Smooth scroll function

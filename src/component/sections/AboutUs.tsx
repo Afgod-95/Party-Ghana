@@ -5,8 +5,8 @@ import Link from 'next/link';
 
 const AboutUs = () => {
   const stats = [
-    { number: "2,500+", label: "Events Executed", icon: Calendar },
-    { number: "15,000+", label: "Clients Served", icon: Users },
+    //{ number: "2,500+", label: "Events Executed", icon: Calendar },
+    //{ number: "15,000+", label: "Clients Served", icon: Users },
     { number: "98%", label: "Satisfaction Rate", icon: Award },
     { number: "5+", label: "Years Excellence", icon: Gift }
   ];

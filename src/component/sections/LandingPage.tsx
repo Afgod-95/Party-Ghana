@@ -36,7 +36,7 @@ const LandingPage = () => {
             className="inline-flex items-center space-x-2 bg-blue-50/90 backdrop-blur-sm text-blue-700 px-4 py-2 rounded-full text-sm font-medium mb-8"
           >
             <Sparkles className="w-4 h-4" />
-            <span>Ghana&apos;s Premier Gift Management Platform</span>
+            <span>Ghana’s First & Most Trusted Gift Management Service</span>
           </motion.div>
 
           <motion.h1

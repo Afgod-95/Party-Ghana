@@ -9,7 +9,7 @@ import AboutUs from '@/component/sections/AboutUs';
 import NavBar from '@/component/NavBar';
 import ScrollTop from '@/component/ScrollToTop';
 import LandingPage from '@/component/sections/LandingPage';
-import Footer from '@/component/sections/Footer';
+import Footer from '@/component/Footer';
 import StepsSection from '@/component/sections/StepsSecction';
 
 

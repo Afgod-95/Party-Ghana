@@ -211,7 +211,7 @@ const EventPackages: React.FC = () => {
               </p>
             </div>
             <Link href="/" className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-6 py-2.5 rounded-full text-sm font-semibold hover:shadow-lg transition-all duration-200">
-              Back to website
+              Back to home
             </Link>
           </div>
         </div>
@@ -348,7 +348,7 @@ const EventPackages: React.FC = () => {
               Email Us
             </a>
             <a
-              href="tel:+233"
+              href="tel:+233531014722"
               className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border-2 border-white text-white px-8 py-4 rounded-full font-semibold hover:bg-white/20 transition-all"
             >
               <Phone className="w-5 h-5" />

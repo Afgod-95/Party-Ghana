@@ -3,7 +3,19 @@ import { motion } from 'framer-motion'
 import { Gift, Instagram, Facebook, Twitter } from 'lucide-react'
 import Link from 'next/link'
 
+
 const Footer = () => {
+
+  const scrollToSection = (id: string) => {
+    const section = document.querySelector(id);
+    if (section) {
+      section.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      // Fallback: if user isn’t on homepage, redirect to it with hash
+      window.location.href = `/${id}`;
+    }
+  };
+
   return (
     <>
       {/* Footer */}
@@ -29,7 +41,7 @@ const Footer = () => {
                 <span className="text-xl font-bold">PartyGhana.Com</span>
               </div>
               <p className="text-slate-400 leading-relaxed mb-6">
-                Ghana&apos;s premier gift management platform. Making celebrations memorable and stress-free.
+                Ghana’s First & Most Trusted Gift Management Service.
               </p>
               <div className="flex space-x-4">
                 {[Facebook, Twitter, Instagram].map((Icon, index) => (
@@ -50,20 +62,22 @@ const Footer = () => {
               {
                 title: 'Services',
                 links: [
-                  { label: 'Event planning and management', href: '/packages' },
-                  { label: 'Honeymoon Planning', href: '/packages' },
-                  { label: 'Local Tours Planning', href: '/packages' },
-                  { label: 'Baby Naming Planning', href: '/packages'  },
-                  { label: 'Birthday Celebrations', href: '/packages'  },
-                  { label: 'Home of Experienced vendors', href: null }
+                  { label: 'Event planning and management', href: '/event-packages' },
+                  { label: 'Honeymoon Planning', href: '/event-packages' },
+                  { label: 'Local Tours Planning', href: '/event-packages' },
+                  { label: 'Baby Naming Planning', href: '/event-packages' },
+                  { label: 'Birthday Celebrations', href: '/event-packages' },
+                  { label: 'Home of Experienced vendors', href: '/event-packages' }
                 ]
               },
               {
                 title: 'Company',
                 links: [
-                  { label: 'About Us', href: '/about' },
-                  { label: 'Blog', href: '/blog' },
-                  { label: 'Contact', href: '/contact-us' }]
+                  { label: 'About Us', href: '#about-us' },
+                  { label: 'Blog', href: '#home' },
+                  { label: 'Contact', href: '#contact' },
+                  { label: 'Event Packages', href: '/event-packages' }
+                ]
               },
               {
                 title: 'Support',
@@ -87,19 +101,25 @@ const Footer = () => {
                 <ul className="space-y-2">
                   {section.links.map((link, linkIndex) => (
                     <li key={linkIndex}>
-                      {typeof link.href === 'string' ? (
+                      {link.href.startsWith('#') ? (
+                        <button
+                          onClick={() => scrollToSection(link.href)}
+                          className="text-slate-400 hover:text-white transition-all duration-200"
+                        >
+                          <motion.p whileHover={{ x: 5 }}>{link.label}</motion.p>
+                        </button>
+                      ) : (
                         <Link
                           href={link.href}
                           className="text-slate-400 hover:text-white transition-all duration-200"
                         >
                           <motion.p whileHover={{ x: 5 }}>{link.label}</motion.p>
                         </Link>
-                      ) : (
-                        <span className="text-slate-400">{link.label}</span>
                       )}
                     </li>
                   ))}
                 </ul>
+
               </motion.div>
             ))}
           </div>

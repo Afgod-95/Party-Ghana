@@ -1,6 +1,7 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 import BookUsModal from '../BookUsModal';
+import Link from 'next/link';
 
 export const fadeInUp = {
     initial: { opacity: 0, y: 60 },
@@ -166,21 +167,22 @@ const Services = () => {
                             <p className="text-blue-100 mb-6 max-w-2xl mx-auto">
                                 Let’s chat about your vision and turn it into reality with our all-in-one event service package!
                             </p>
-                            <motion.button
-                                onClick={handleBookApoointment}
+                            <Link href={'/event-packages'}>
+                                <motion.button
                                 whileHover={{ scale: 1.05 }}
                                 whileTap={{ scale: 0.95 }}
-                                className="bg-white text-slate-900 font-semibold px-8 py-3 rounded-full hover:bg-blue-50 transition-colors duration-300 shadow-lg"
+                                className="bg-pink-600 text-white font-semibold px-8 py-3 rounded-full hover:bg-pink-500 transition-colors duration-300 shadow-lg"
                             >
-                                Schedule a Consultation
+                               Check our Event Packages
                             </motion.button>
+                            </Link>
+                            
                         </div>
                     </motion.div>
                 </div>
             </motion.section>
             <BookUsModal isOpen = {isModalOpen} onClose={() => setIsModalOpen(false)} />
         </>
-
     )
 }
 
