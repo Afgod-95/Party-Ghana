@@ -162,7 +162,7 @@ const Services = () => {
                         transition={{ duration: 0.6, delay: 0.4 }}
                         className="text-center mt-16 max-w-7xl mx-auto"
                     >
-                        <div className="bg-gradient-to-r from-slate-800 to-slate-900 rounded-2xl p-8 text-white shadow-xl">
+                        <div className="bg-gradient-to-r from-pink-600 to-pink-500 rounded-2xl p-8 text-white shadow-xl">
                             <h3 className="text-2xl font-bold mb-4">Your Dream Event? Let’s Make It Real.</h3>
                             <p className="text-blue-100 mb-6 max-w-2xl mx-auto">
                                 Let’s chat about your vision and turn it into reality with our all-in-one event service package!
@@ -171,7 +171,7 @@ const Services = () => {
                                 <motion.button
                                 whileHover={{ scale: 1.05 }}
                                 whileTap={{ scale: 0.95 }}
-                                className="bg-pink-600 text-white font-semibold px-8 py-3 rounded-full hover:bg-pink-500 transition-colors duration-300 shadow-lg"
+                                className="bg-white text-pink-600 font-semibold px-8 py-3 rounded-full hover:bg-white-500 transition-colors duration-300 shadow-lg"
                             >
                                Check our Event Packages
                             </motion.button>
