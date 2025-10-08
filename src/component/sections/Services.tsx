@@ -24,9 +24,9 @@ const Services = () => {
     }
     const services = [
         {
-            image: 'https://plus.unsplash.com/premium_photo-1686824684748-181198b5b44a?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-            title: 'Honeymoon Planning',
-            description: 'Craft dreamy honeymoons where your forever begins in unforgettable style!',
+            image: 'https://s.yimg.com/ny/api/res/1.2/VUBKsqS7kzdYu45jFvnZQA--/YXBwaWQ9aGlnaGxhbmRlcjt3PTY0MDtoPTQyOQ--/https://media.zenfs.com/en/people_218/83af8c30d0682cf6da818e9a97819b52',
+            title: 'Wedding & Honeymoon Planning',
+            description: 'Craft vibrant weddings and soulful honeymoons that honour your roots and romance.',
             category: 'Marriage'
         },
         {

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Phone, User, MessageCircle, Calendar, Users, ChevronDown } from 'lucide-react';
+import { X, User, MessageCircle, } from 'lucide-react';
 import axios from 'axios';
 import { formEndpoint } from '@/constants/FormEndpoint';
 import PhoneField from './PhoneInput';
@@ -12,7 +12,7 @@ interface BookUsModalProps {
 interface FormData {
   name: string;
   //email: string;
-  phone: string;
+  phone: string; 
   //eventType: string;
   //eventDate: string;
   //guestCount: string;
@@ -35,7 +35,7 @@ const BookUsModal: React.FC<BookUsModalProps> = ({ isOpen, onClose }) => {
 
 
 
-  const [isEventTypeOpen, setIsEventTypeOpen] = useState<boolean>(false);
+  //const [isEventTypeOpen, setIsEventTypeOpen] = useState<boolean>(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   // Prevent body scroll when modal is open
@@ -50,7 +50,7 @@ const BookUsModal: React.FC<BookUsModalProps> = ({ isOpen, onClose }) => {
       document.body.style.overflow = '';
     };
   }, [isOpen]);
-
+  {/* 
   useEffect(() => {
     // Close dropdown when clicking outside
     const handleClickOutside = (event: MouseEvent) => {
@@ -65,6 +65,7 @@ const BookUsModal: React.FC<BookUsModalProps> = ({ isOpen, onClose }) => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
+  */}
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -73,7 +74,7 @@ const BookUsModal: React.FC<BookUsModalProps> = ({ isOpen, onClose }) => {
       [name]: value
     }));
   };
-
+    {/* 
   const handleEventTypeSelect = (type: string) => {
     setFormData(prev => ({
       ...prev,
@@ -81,6 +82,7 @@ const BookUsModal: React.FC<BookUsModalProps> = ({ isOpen, onClose }) => {
     }));
     setIsEventTypeOpen(false);
   };
+  */}
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

@@ -1,6 +1,6 @@
 import React from 'react'
 import { motion } from 'framer-motion'
-import { Calendar, Gift, Users, Award } from 'lucide-react'
+import {  Gift,  Award } from 'lucide-react'
 import Link from 'next/link';
 
 const AboutUs = () => {

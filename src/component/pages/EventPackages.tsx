@@ -3,10 +3,11 @@ import { motion } from 'framer-motion';
 import { Heart, Baby, Cake, Users, Gift, Music, Cloud, Flower2, Check, Sparkles, Mail, Phone } from 'lucide-react';
 import Link from 'next/link';
 
-interface PackageFeature {
+ {/*  interface PackageFeature {
   name: string;
   items: string[];
 }
+  */}
 
 interface EventPackage {
   id: string;

@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useMemo } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
-import { ArrowRight, X, Menu } from 'lucide-react'
+import { X, Menu } from 'lucide-react'
 import Logo from '@/assets/Logo.png'
 import Image from 'next/image'
 import Link from 'next/link'

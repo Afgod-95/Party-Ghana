@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown, Mail, Gift, Package, Truck, Calendar, Shield, Lightbulb, HelpCircle } from 'lucide-react';
-import Router from 'next/router';
 import Link from 'next/link';
 
 interface FAQItem {

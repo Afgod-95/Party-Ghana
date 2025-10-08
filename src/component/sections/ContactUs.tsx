@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ArrowRight, Phone, Mail, MapPin, CheckCircle, Link } from 'lucide-react'
+import { ArrowRight, Phone, Mail, MapPin, CheckCircle, } from 'lucide-react'
 import axios from 'axios'
 import { formEndpoint } from '@/constants/FormEndpoint'
 import PhoneField from '../PhoneInput'
