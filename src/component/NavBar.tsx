@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { ArrowRight, X, Menu } from 'lucide-react'
 import Logo from '@/assets/Logo.png'
 import Image from 'next/image'
+import Link from 'next/link'
 
 type NavBarProps = {
   setIsMenuOpen: (isOpen: boolean) => void,
@@ -20,15 +21,24 @@ const NavBar: React.FC<NavBarProps> = ({
   setIsModalOpen,
 }) => {
 
-  // Navigation items
+  // Navigation items - add isRoute flag for items that should navigate instead of scroll
   const navItems = useMemo(() => [
-    { name: 'Home', href: 'home' },
-    { name: 'How It Works', href: 'how-it-works' },
-    { name: 'Services', href: 'services' },
-    { name: 'About Us', href: 'about-us' },
-    { name: 'Contact', href: 'contact' },
-    { name: "Event Packages", href: "event-packages" }
+    { name: 'Home', href: 'home', isRoute: false },
+    { name: 'How It Works', href: 'how-it-works', isRoute: false },
+    { name: 'Services', href: 'services', isRoute: false },
+    { name: 'About Us', href: 'about-us', isRoute: false },
+    { name: 'Contact', href: 'contact', isRoute: false },
+    { name: "Event Packages", href: "/event-packages", isRoute: true }
   ], []);
+
+  // Handle navigation - either scroll to section or navigate to route
+  const handleNavigation = (item: typeof navItems[0]) => {
+    if (!item.isRoute) {
+      scrollToSection(item.href);
+      setIsMenuOpen(false);
+    }
+    // For routes, the Link component handles navigation
+  };
 
   // Smooth scroll function
   const scrollToSection = (sectionId: string) => {
@@ -39,7 +49,6 @@ const NavBar: React.FC<NavBarProps> = ({
         block: 'start',
       });
     }
-    setIsMenuOpen(false);
   };
 
   const [showAppointmentBtn, setShowAppointmentBtn] = useState<boolean>(false);
@@ -47,7 +56,7 @@ const NavBar: React.FC<NavBarProps> = ({
   // Track active section on scroll
   useEffect(() => {
     const handleScroll = () => {
-      const sections = navItems.map(item => item.href);
+      const sections = navItems.filter(item => !item.isRoute).map(item => item.href);
       const scrollPosition = window.scrollY + 100;
 
       for (let i = sections.length - 1; i >= 0; i--) {
@@ -123,25 +132,37 @@ const NavBar: React.FC<NavBarProps> = ({
 
           <div className="hidden lg:flex items-center space-x-8">
             {navItems.map((item) => (
-              <motion.button
-                key={item.name}
-                onClick={() => scrollToSection(item.href)}
-                className={`text-sm font-medium transition-all duration-200 hover:scale-105 relative ${activeSection === item.href
-                  ? 'text-blue-600'
-                  : 'text-slate-700 hover:text-blue-600'
+              item.isRoute ? (
+                <Link key={item.name} href={item.href}>
+                  <motion.button
+                    className="text-sm font-medium transition-all duration-200 hover:scale-105 relative text-slate-700 hover:text-blue-600"
+                    whileHover={{ y: -2 }}
+                  >
+                    {item.name}
+                  </motion.button>
+                </Link>
+              ) : (
+                <motion.button
+                  key={item.name}
+                  onClick={() => handleNavigation(item)}
+                  className={`text-sm font-medium transition-all duration-200 hover:scale-105 relative ${
+                    activeSection === item.href
+                      ? 'text-blue-600'
+                      : 'text-slate-700 hover:text-blue-600'
                   }`}
-                whileHover={{ y: -2 }}
-              >
-                {item.name}
-                {activeSection === item.href && (
-                  <motion.div
-                    layoutId="activeIndicator"
-                    className="absolute -bottom-1 left-0 right-0 h-0.5 bg-blue-600 rounded-full"
-                    initial={false}
-                    transition={{ type: "spring", stiffness: 500, damping: 30 }}
-                  />
-                )}
-              </motion.button>
+                  whileHover={{ y: -2 }}
+                >
+                  {item.name}
+                  {activeSection === item.href && (
+                    <motion.div
+                      layoutId="activeIndicator"
+                      className="absolute -bottom-1 left-0 right-0 h-0.5 bg-blue-600 rounded-full"
+                      initial={false}
+                      transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                    />
+                  )}
+                </motion.button>
+              )
             ))}
             {showAppointmentBtn && (
               <motion.button
@@ -158,35 +179,6 @@ const NavBar: React.FC<NavBarProps> = ({
               </motion.button>
             )}
           </div>
-
-
-          {/* Register Button 
-          <div className="hidden lg:flex items-center gap-4">
-            
-            
-                 <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => setIsModalOpen(true)}
-              className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-6 py-2.5 rounded-full text-sm font-semibold hover:shadow-lg transition-all duration-200 flex items-center space-x-2"
-            >
-              <span>Register</span>
-            </motion.button>
-
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => setIsModalOpen(true)}
-              className="border-1 border-black/10 text-black px-6 py-2.5 rounded-full text-sm font-semibold hover:shadow-lg transition-all duration-200 flex items-center space-x-2"
-            >
-              <span>Login</span>
-            </motion.button>
-            
-           
-
-
-          </div>
-          */}
 
           <div className="lg:hidden">
             <motion.button
@@ -214,44 +206,43 @@ const NavBar: React.FC<NavBarProps> = ({
             >
               <div className="py-4 space-y-4 border-t border-slate-200">
                 {navItems.map((item, index) => (
-                  <motion.button
-                    key={item.name}
-                    initial={{ x: -20, opacity: 0 }}
-                    animate={{ x: 0, opacity: 1 }}
-                    exit={{ x: -20, opacity: 0 }}
-                    transition={{
-                      delay: index * 0.05,
-                      duration: 0.2,
-                      ease: "easeOut"
-                    }}
-                    onClick={() => scrollToSection(item.href)}
-                    className={`block text-sm font-medium transition-colors py-2 w-full text-left ${activeSection === item.href ? 'text-blue-600' : 'text-slate-700 hover:text-blue-600'
-                      }`}
-                  >
-                    {item.name}
-                  </motion.button>
-                ))}
-                {/* Register Button */}
-                {/* 
+                  item.isRoute ? (
+                    <Link key={item.name} href={item.href}>
+                      <motion.button
+                        initial={{ x: -20, opacity: 0 }}
+                        animate={{ x: 0, opacity: 1 }}
+                        exit={{ x: -20, opacity: 0 }}
+                        transition={{
+                          delay: index * 0.05,
+                          duration: 0.2,
+                          ease: "easeOut"
+                        }}
+                        onClick={() => setIsMenuOpen(false)}
+                        className="block text-sm font-medium transition-colors py-2 w-full text-left text-slate-700 hover:text-blue-600"
+                      >
+                        {item.name}
+                      </motion.button>
+                    </Link>
+                  ) : (
                     <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={() => setIsModalOpen(true)}
-                  className="bg-gradient-to-r w-full text-center justify-center from-blue-500 to-purple-600 text-white px-6 py-2.5 rounded-full text-sm font-semibold hover:shadow-lg transition-all duration-200 flex items-center space-x-2"
-                >
-                  <span className='text-center'>Register</span>
-                </motion.button>
-
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={() => setIsModalOpen(true)}
-                  className="border-1 border-black/10 w-full justify-center  text-black px-6 py-2.5 rounded-full text-sm font-semibold hover:shadow-lg transition-all duration-200 flex items-center space-x-2"
-                >
-                  <span className='text-center'>Login</span>
-                </motion.button>
-                */}
-
+                      key={item.name}
+                      initial={{ x: -20, opacity: 0 }}
+                      animate={{ x: 0, opacity: 1 }}
+                      exit={{ x: -20, opacity: 0 }}
+                      transition={{
+                        delay: index * 0.05,
+                        duration: 0.2,
+                        ease: "easeOut"
+                      }}
+                      onClick={() => handleNavigation(item)}
+                      className={`block text-sm font-medium transition-colors py-2 w-full text-left ${
+                        activeSection === item.href ? 'text-blue-600' : 'text-slate-700 hover:text-blue-600'
+                      }`}
+                    >
+                      {item.name}
+                    </motion.button>
+                  )
+                ))}
               </div>
             </motion.div>
           )}
