@@ -1,3 +1,4 @@
+'use client'
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown, Mail, Lock, Database, Share2, Clock, Shield, Cookie, UserCheck, ExternalLink, Baby, RefreshCw, MapPin } from 'lucide-react';

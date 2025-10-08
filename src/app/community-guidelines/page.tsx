@@ -1,4 +1,3 @@
-"use client"
 import CommunityGuidelines from '@/component/pages/CommunityGuidelines'
 import React from 'react'
 

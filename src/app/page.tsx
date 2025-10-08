@@ -1,5 +1,5 @@
 "use client"
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import ContactUs from '@/component/sections/ContactUs';
 import Features from '@/component/sections/Features';
@@ -19,21 +19,20 @@ const PartyGhanaHomepage = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   // Navigation items
-  const navItems = [
+  const navItems = useCallback(() => [
     { name: 'Home', href: 'home' },
     { name: 'How It Works', href: 'how-it-works' },
     { name: 'Services', href: 'services' },
     { name: 'About Us', href: 'about-us' },
     { name: 'Contact', href: 'contact' }
-  ];
+  ], []);
 
 
   // Track active section on scroll
   useEffect(() => {
     const handleScroll = () => {
-      const sections = navItems.map(item => item.href);
       const scrollPosition = window.scrollY + 100;
-
+      const sections = navItems().map(item => item.href);
       for (let i = sections.length - 1; i >= 0; i--) {
         const section = document.getElementById(sections[i]);
         if (section && section.offsetTop <= scrollPosition) {
@@ -45,7 +44,7 @@ const PartyGhanaHomepage = () => {
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [navItems]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50">

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, User, MessageCircle, } from 'lucide-react';
 import axios from 'axios';
@@ -36,7 +36,7 @@ const BookUsModal: React.FC<BookUsModalProps> = ({ isOpen, onClose }) => {
 
 
   //const [isEventTypeOpen, setIsEventTypeOpen] = useState<boolean>(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
+  //const dropdownRef = useRef<HTMLDivElement>(null);
 
   // Prevent body scroll when modal is open
   useEffect(() => {
@@ -120,16 +120,6 @@ const BookUsModal: React.FC<BookUsModalProps> = ({ isOpen, onClose }) => {
   //const isFormValid = formData.name.trim() && formData.email.trim() && formData.phone.trim() && formData.eventType.trim() && formData.eventDate.trim() && formData.message.trim();
   const isFormValid = formData.name.trim() && formData.phone.trim() && formData.message.trim();
   const inputBaseClasses = "w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 placeholder-slate-500 text-slate-900 bg-white";
-
-  const eventTypes = [
-    'Wedding',
-    'Birthday Party',
-    'Corporate Event',
-    'Anniversary',
-    'Baby Shower',
-    'Graduation',
-    'Other'
-  ];
 
   return (
     <AnimatePresence>

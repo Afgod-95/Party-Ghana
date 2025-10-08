@@ -1,3 +1,4 @@
+'use client'
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Heart, Baby, Cake, Users, Gift, Music, Cloud, Flower2, Check, Sparkles, Mail, Phone } from 'lucide-react';
