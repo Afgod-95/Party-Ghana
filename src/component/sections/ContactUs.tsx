@@ -1,12 +1,12 @@
-import React, { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { ArrowRight, Phone, Mail, MapPin, CheckCircle, } from 'lucide-react'
-import axios from 'axios'
-import { formEndpoint } from '@/constants/FormEndpoint'
-import PhoneField from '../PhoneInput'
+import React from 'react'
+import { motion } from 'framer-motion'
+import {  Phone, Mail, MapPin,  } from 'lucide-react'
+import { Music } from 'lucide-react'
+import Image from 'next/image'
+
 
 const ContactUs = () => {
-  const [formData, setFormData] = useState({
+  /*const [formData, setFormData] = useState({
     name: '',
     email: '',
     phone: '',
@@ -16,6 +16,8 @@ const ContactUs = () => {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [error, setError] = useState<string | null>(null);
+
+  */
 
   const contactInfo = [
     {
@@ -40,7 +42,7 @@ const ContactUs = () => {
     }
   ]
 
-  const inputBaseClasses = "w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 placeholder-slate-500 text-slate-900 bg-white"
+  /*const inputBaseClasses = "w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 placeholder-slate-500 text-slate-900 bg-white"
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
@@ -87,6 +89,7 @@ const ContactUs = () => {
 
   const isFormValid = formData.name.trim() && formData.email.trim() && formData.phone.trim() && formData.message.trim()
 
+  */
   return (
     <section className="py-24 bg-slate-50" id="contact">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -163,7 +166,57 @@ const ContactUs = () => {
             </motion.div>
 
             {/* Contact Form */}
-            <motion.div
+            <motion.section
+  initial={{ opacity: 0, y: 20 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ delay: 0.6, duration: 0.6 }}
+  className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pb-20"
+>
+  <div className="relative bg-gradient-to-r from-blue-500 to-purple-600 rounded-3xl shadow-2xl overflow-hidden">
+    {/* Background Image */}
+    <div className="absolute inset-0 opacity-20">
+      <Image
+        src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=1200&q=80"
+        alt="Party celebration background"
+        fill
+        className="object-cover"
+        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px"
+      />
+    </div>
+    
+    {/* Content */}
+    <div className="relative z-10 p-8 sm:p-12 text-center text-white">
+      <Music className="w-16 h-16 mx-auto mb-6" />
+      <h3 className="text-3xl sm:text-4xl font-bold mb-4">Ready to Plan Your Event?</h3>
+      <p className="text-lg text-white/90 mb-8 max-w-2xl mx-auto">
+        Contact us today to discuss your vision and get a customized package quote. We're here to make your celebration extraordinary!
+      </p>
+      <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+        <a
+          href="mailto:hellopartyghana@gmail.com"
+          className="inline-flex items-center gap-2 bg-white text-purple-600 px-8 py-4 rounded-full font-semibold hover:bg-purple-50 transition-all transform hover:scale-105 shadow-lg"
+        >
+          <Mail className="w-5 h-5" />
+          Email Us
+        </a>
+        <a
+          href="tel:+233531014722"
+          className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border-2 border-white text-white px-8 py-4 rounded-full font-semibold hover:bg-white/20 transition-all"
+        >
+          <Phone className="w-5 h-5" />
+          Call Us
+        </a>
+      </div>
+    </div>
+  </div>
+</motion.section>
+           
+        
+                {/* 
+                
+                
+                
+                    <motion.div
               initial={{ opacity: 0, x: 50 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
@@ -188,7 +241,7 @@ const ContactUs = () => {
                     </div>
 
                     <form onSubmit={handleSubmit} className="space-y-6">
-                      {/* Personal Information */}
+                    
                       <div className="grid md:grid-cols-2 gap-6">
                         <div className="flex flex-col">
                           <label className="block text-sm font-medium text-slate-700 mb-2">
@@ -220,7 +273,7 @@ const ContactUs = () => {
                         </div>
                       </div>
 
-                      {/* Contact Details */}
+                    
                       <div className="grid md:grid-cols-2 gap-6">
                         <PhoneField
                           value={formData.phone}
@@ -246,7 +299,7 @@ const ContactUs = () => {
                         </div>
                       </div>
 
-                      {/* Message */}
+                 
                       <div className="flex flex-col">
                         <label className="block text-sm font-medium text-slate-700 mb-2">
                           Message *
@@ -272,7 +325,7 @@ const ContactUs = () => {
                         </motion.div>
                       )}
 
-                      {/* Submit Button */}
+                     
                       <motion.button
                         whileHover={{ scale: isFormValid ? 1.02 : 1 }}
                         whileTap={{ scale: isFormValid ? 0.98 : 1 }}
@@ -306,7 +359,7 @@ const ContactUs = () => {
                     </form>
                   </motion.div>
                 ) : (
-                  /* Success Message */
+                 
                   <motion.div
                     key="success"
                     initial={{ opacity: 0, scale: 0.9, y: 20 }}
@@ -364,6 +417,13 @@ const ContactUs = () => {
                 )}
               </AnimatePresence>
             </motion.div>
+            */}
+           
+     
+           
+            
+
+
           </div>
         </div>
       </div>
