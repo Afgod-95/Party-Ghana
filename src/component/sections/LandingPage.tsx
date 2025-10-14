@@ -10,6 +10,17 @@ const LandingPage = () => {
   const handleBookApoointment = () => {
     setIsModalOpen(true)
   }
+
+  // Smooth scroll function
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      });
+    }
+  };
   return (
     <section
       className="relative overflow-hidden min-h-screen flex items-center bg-gradient-to-t"
@@ -59,12 +70,12 @@ const LandingPage = () => {
             className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-6"
           >
             <motion.button
-              onClick={handleBookApoointment}
+              onClick={() => scrollToSection('premium-gift-service')}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-8 py-4 rounded-full text-lg font-semibold hover:shadow-xl transition-all duration-200 flex items-center space-x-3"
             >
-              <span>Book Us Now</span>
+              <span>Premium Gift Service</span>
               <ArrowRight className="w-5 h-5" />
             </motion.button>
 
