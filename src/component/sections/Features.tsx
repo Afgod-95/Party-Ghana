@@ -61,7 +61,7 @@ const Features = () => {
                   {
                     icon: Handshake,
                     title: 'Access to Vendors',
-                    description: 'WWe have a wide range of event vendors and suppliers including photographers, videographers, sound, decorators, and more.'
+                    description: 'We have a wide range of event vendors and suppliers including photographers, videographers, sound, decorators, and more.'
                   }
                 ].map((feature, index) => (
                   <motion.div

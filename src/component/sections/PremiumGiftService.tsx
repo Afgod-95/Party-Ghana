@@ -50,7 +50,7 @@ export default function PremiumGiftService() {
           </p>
           <button
             onClick={() => setIsExpanded(!isExpanded)}
-            className="inline-flex items-center gap-2 text-blue-600 font-semibold hover:text-blue-700 transition-colors"
+            className="inline-flex items-center gap-2 text-gray-500 font-semibold hover:text-black mb-3 transition-colors"
           >
             See {isExpanded ? 'Less' : 'More'}
             <motion.div

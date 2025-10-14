@@ -1,3 +1,4 @@
+"use client"
 import React, { useEffect, useState, useMemo } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { X, Menu } from 'lucide-react'
@@ -31,15 +32,6 @@ const NavBar: React.FC<NavBarProps> = ({
     { name: "Event Packages", href: "/event-packages", isRoute: true }
   ], []);
 
-  // Handle navigation - either scroll to section or navigate to route
-  const handleNavigation = (item: typeof navItems[0]) => {
-    if (!item.isRoute) {
-      scrollToSection(item.href);
-      setIsMenuOpen(false);
-    }
-    // For routes, the Link component handles navigation
-  };
-
   // Smooth scroll function
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
@@ -51,7 +43,17 @@ const NavBar: React.FC<NavBarProps> = ({
     }
   };
 
-  //const [showAppointmentBtn, setShowAppointmentBtn] = useState<boolean>(false);
+  // Handle navigation - either scroll to section or navigate to route
+  const handleNavigation = (item: typeof navItems[0]) => {
+    if (!item.isRoute) {
+      // Close menu first
+      setIsMenuOpen(false);
+      // Wait for menu animation to complete before scrolling
+      setTimeout(() => {
+        scrollToSection(item.href);
+      }, 350);
+    }
+  };
 
   // Track active section on scroll
   useEffect(() => {
@@ -72,37 +74,32 @@ const NavBar: React.FC<NavBarProps> = ({
     return () => window.removeEventListener('scroll', handleScroll);
   }, [navItems, setActiveSection]);
 
-  // Prevent body scroll and horizontal overflow when menu is open
+  // Prevent body scroll when menu is open (fixed white space issue)
   useEffect(() => {
     if (isMenuOpen) {
-      document.body.style.overflow = 'hidden';
+      // Store current scroll position
+      const scrollY = window.scrollY;
       document.body.style.position = 'fixed';
+      document.body.style.top = `-${scrollY}px`;
       document.body.style.width = '100%';
+      document.body.style.overflowY = 'scroll';
     } else {
-      document.body.style.overflow = '';
+      // Restore scroll position
+      const scrollY = document.body.style.top;
       document.body.style.position = '';
+      document.body.style.top = '';
       document.body.style.width = '';
+      document.body.style.overflowY = '';
+      window.scrollTo(0, parseInt(scrollY || '0') * -1);
     }
 
     return () => {
-      document.body.style.overflow = '';
       document.body.style.position = '';
+      document.body.style.top = '';
       document.body.style.width = '';
+      document.body.style.overflowY = '';
     };
   }, [isMenuOpen]);
-
-  /*
-    useEffect(() => {
-      const handleScroll = () => {
-        setShowAppointmentBtn(window.scrollY > window.innerHeight);
-        console.log(window.innerHeight)
-      };
-
-      window.addEventListener("scroll", handleScroll);
-      return () => window.removeEventListener("scroll", handleScroll);
-    }, []);
-  */
-
 
   return (
     <motion.header
@@ -118,14 +115,16 @@ const NavBar: React.FC<NavBarProps> = ({
             whileHover={{ scale: 1.05 }}
             transition={{ type: "spring", stiffness: 400, damping: 10 }}
           >
-            <div className="relative rounded-2xl border-1 cursor-pointer" onClick = {() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-              <div className="w-10 h-10  rounded-xl flex items-center justify-center">
-                <Image src={Logo}
-                  fill
-                  alt='Logo'
-                  className='w-[100%] object-fit-cover'
-                />
-              </div>
+            <div 
+              className="relative w-10 h-10 rounded-2xl border-1 cursor-pointer" 
+              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            >
+              <Image 
+                src={Logo}
+                alt='Logo'
+                fill
+                className='object-contain'
+              />
             </div>
             <span className="text-xl font-bold text-black">
               Party Ghana

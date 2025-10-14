@@ -49,7 +49,7 @@ const AboutUs = () => {
               className="space-y-8"
             >
               <div className="prose prose-lg max-w-none">
-                <h3 className="text-2xl font-semibold text-slate-900 mb-6">
+                <h3 className="text-2xl md:text-center font-semibold text-slate-900 mb-6">
                   Our Story
                 </h3>
                 
@@ -125,7 +125,8 @@ const AboutUs = () => {
               throw events—we help you make stories worth telling!"
             </blockquote>
             
-            <div className="flex items-center justify-center space-x-4">
+            {/* 
+              <div className="flex items-center justify-center space-x-4">
               <div className="w-px h-12 bg-slate-600"></div>
               <div className="text-left">
                 <Link href = 'https://www.linkedin.com/in/prince-baah-duodu-pbd-4b407514/' target='blank'  className="text-white font-semibold hover:text-blue-300 transition-colors duration-300">Prince Baah-Duodu</Link>
@@ -133,6 +134,9 @@ const AboutUs = () => {
               </div>
               <div className="w-px h-12 bg-slate-600"></div>
             </div>
+            
+            */}
+            
           </motion.div>
 
           {/* CTA Section 

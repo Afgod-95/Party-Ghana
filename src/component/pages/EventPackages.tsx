@@ -208,11 +208,11 @@ const EventPackages: React.FC = () => {
               <h1 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">
                 PartyGhana.Com
               </h1>
-              <p className="text-xs sm:text-sm text-gray-600 mt-1">
+              <p className="text-xs sm:text-sm text-gray-600 mt-1 w-auto">
                 Ghana's First & Most Trusted Gift Management Service
               </p>
             </div>
-            <Link href="/" className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-6 py-2.5 rounded-full text-sm font-semibold hover:shadow-lg transition-all duration-200">
+            <Link href="/" className="bg-gradient-to-r from-blue-500 to-purple-600 text-white text-center px-4 py-2.5 rounded-full text-sm font-semibold hover:shadow-lg transition-all duration-200">
               Back to home
             </Link>
           </div>
