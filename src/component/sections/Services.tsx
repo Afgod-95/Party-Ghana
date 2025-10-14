@@ -1,6 +1,5 @@
 import React from 'react'
 import { motion } from 'framer-motion'
-import BookUsModal from '../BookUsModal';
 import Link from 'next/link';
 
 export const fadeInUp = {
@@ -18,10 +17,7 @@ export const staggerContainer = {
 };
 
 const Services = () => {
-    const [isModalOpen, setIsModalOpen] = React.useState<boolean>(false);
-    const handleBookApoointment = () => {
-        setIsModalOpen(true)
-    }
+    
     const services = [
         {
             image: 'https://s.yimg.com/ny/api/res/1.2/VUBKsqS7kzdYu45jFvnZQA--/YXBwaWQ9aGlnaGxhbmRlcjt3PTY0MDtoPTQyOQ--/https://media.zenfs.com/en/people_218/83af8c30d0682cf6da818e9a97819b52',
@@ -131,21 +127,6 @@ const Services = () => {
                                     <p className="text-slate-600 leading-relaxed mb-4">
                                         {service.description}
                                     </p>
-
-                                    {/* CTA Button */}
-                                    <motion.button
-                                        onClick={handleBookApoointment}
-                                        whileHover={{ scale: 1.05 }}
-                                        whileTap={{ scale: 0.95 }}
-                                        className="w-full bg-slate-100 hover:bg-blue-50 text-slate-700 hover:text-blue-600 font-medium py-2 px-4 rounded-lg transition-all duration-300 group-hover:shadow-md"
-                                    >
-                                        <span className="flex items-center justify-center gap-2">
-                                            Book Us Now
-                                            <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                                            </svg>
-                                        </span>
-                                    </motion.button>
                                 </div>
 
                                 {/* Hover Effect Border */}
@@ -181,7 +162,6 @@ const Services = () => {
                     </motion.div>
                 </div>
             </motion.section>
-            <BookUsModal isOpen = {isModalOpen} onClose={() => setIsModalOpen(false)} />
         </>
     )
 }

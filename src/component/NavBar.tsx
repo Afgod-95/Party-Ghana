@@ -24,7 +24,7 @@ const NavBar: React.FC<NavBarProps> = ({
   // Navigation items - add isRoute flag for items that should navigate instead of scroll
   const navItems = useMemo(() => [
     { name: 'Home', href: 'home', isRoute: false },
-    { name: 'How It Works', href: 'how-it-works', isRoute: false },
+    { name: 'Premium Gift Service', href: 'premium-gift-service', isRoute: false },
     { name: 'Services', href: 'services', isRoute: false },
     { name: 'About Us', href: 'about-us', isRoute: false },
     { name: 'Contact', href: 'contact', isRoute: false },
@@ -51,7 +51,7 @@ const NavBar: React.FC<NavBarProps> = ({
     }
   };
 
-  const [showAppointmentBtn, setShowAppointmentBtn] = useState<boolean>(false);
+  //const [showAppointmentBtn, setShowAppointmentBtn] = useState<boolean>(false);
 
   // Track active section on scroll
   useEffect(() => {
@@ -91,15 +91,17 @@ const NavBar: React.FC<NavBarProps> = ({
     };
   }, [isMenuOpen]);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setShowAppointmentBtn(window.scrollY > window.innerHeight);
-      console.log(window.innerHeight)
-    };
+  /*
+    useEffect(() => {
+      const handleScroll = () => {
+        setShowAppointmentBtn(window.scrollY > window.innerHeight);
+        console.log(window.innerHeight)
+      };
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+      window.addEventListener("scroll", handleScroll);
+      return () => window.removeEventListener("scroll", handleScroll);
+    }, []);
+  */
 
 
   return (
@@ -164,20 +166,6 @@ const NavBar: React.FC<NavBarProps> = ({
                 </motion.button>
               )
             ))}
-            {showAppointmentBtn && (
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                initial={{ opacity: 0, x: 100 }}   // start hidden, slide from right
-                animate={{ opacity: 1, x: 0 }}     // animate in
-                exit={{ opacity: 0, x: 100 }}      // animate out when hidden
-                transition={{ type: "spring", stiffness: 120, damping: 20 }}
-                onClick={() => setIsModalOpen(true)}
-                className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-6 py-2.5 rounded-full text-sm font-semibold hover:shadow-lg transition-all duration-200 flex items-center space-x-2"
-              >
-                <span className="text-center">Book us Now</span>
-              </motion.button>
-            )}
           </div>
 
           <div className="lg:hidden">

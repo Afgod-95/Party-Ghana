@@ -2,6 +2,7 @@ import React from 'react'
 import { motion } from 'framer-motion'
 import { Clock, Gift, Hourglass, BadgePercent, Monitor, Users2, Handshake } from 'lucide-react'
 import BookUsModal from '../BookUsModal';
+import Link from 'next/link';
 
 const Features = () => {
   const [isModalOpen, setIsModalOpen] = React.useState<boolean>(false);
@@ -114,14 +115,19 @@ const Features = () => {
                   </motion.div>
                   <h3 className="text-2xl font-bold mb-4">Ready to Book Us Now?</h3>
                   <p className="mb-6 opacity-90">Join thousands of satisfied users who trust PartyGhana.Com for their special events.</p>
-                  <motion.button
-                    onClick={handleBookApoointment}
+                  <motion.div
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    className="bg-white text-blue-600 px-8 py-3 rounded-full font-semibold hover:bg-blue-50 transition-colors"
                   >
-                    Create Your First Event
-                  </motion.button>
+                    <Link href={'/event-packages'}
+                      className="bg-white text-blue-600 px-8 py-3 rounded-full font-semibold hover:bg-blue-50 transition-colors"
+                    >
+
+                      Create Your First Event
+
+                    </Link>
+                  </motion.div>
+
                 </div>
               </motion.div>
             </motion.div>
