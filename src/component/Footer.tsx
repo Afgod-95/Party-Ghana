@@ -11,10 +11,28 @@ const Footer = () => {
     if (section) {
       section.scrollIntoView({ behavior: 'smooth' });
     } else {
-      // Fallback: if user isn’t on homepage, redirect to it with hash
+      // Fallback: if user isn't on homepage, redirect to it with hash
       window.location.href = `/${id}`;
     }
   };
+
+  const socialLinks = [
+    { 
+      Icon: Facebook, 
+      href: "https://www.facebook.com/share/1FEqqUBrdy/?mibextid=wwXIfr",
+      label: "Facebook"
+    },
+    { 
+      Icon: Twitter, 
+      href: "https://x.com/partyghanagh?s=21",
+      label: "Twitter"
+    },
+    { 
+      Icon: Instagram, 
+      href: "https://www.instagram.com/partyghanagh?igsh=bGxpejVobHR3OGF3&utm_source=qr",
+      label: "Instagram"
+    }
+  ];
 
   return (
     <>
@@ -41,18 +59,21 @@ const Footer = () => {
                 <span className="text-xl font-bold">PartyGhana.Com</span>
               </div>
               <p className="text-slate-400 leading-relaxed mb-6">
-                Ghana’s First & Most Trusted Gift Management Service.
+                Ghana's First & Most Trusted Gift Management Service.
               </p>
               <div className="flex space-x-4">
-                {[Facebook, Twitter, Instagram].map((Icon, index) => (
+                {socialLinks.map((social, index) => (
                   <motion.a
                     key={index}
-                    href="#"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href={social.href}
+                    aria-label={social.label}
                     whileHover={{ scale: 1.2, rotate: 5 }}
                     whileTap={{ scale: 0.9 }}
                     className="w-10 h-10 bg-slate-800 rounded-lg flex items-center justify-center hover:bg-blue-600 transition-colors"
                   >
-                    <Icon className="w-5 h-5" />
+                    <social.Icon className="w-5 h-5" />
                   </motion.a>
                 ))}
               </div>
@@ -141,4 +162,4 @@ const Footer = () => {
   )
 }
 
-export default Footer
+export default Footer;
